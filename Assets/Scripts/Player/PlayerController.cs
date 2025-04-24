@@ -17,10 +17,13 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         rb = GetComponent<Rigidbody>();
         mainCamera = Camera.main;
     }
 
+    //Uso fixedUpdate en lugar de Update porque es mejor para el tema de fisicas, ya que se ejecuta por defecto cada 0.02s     
     void FixedUpdate()
     {
         MovePlayer();
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+        HandleShooting();
     }
 
     void MovePlayer()
@@ -61,6 +65,25 @@ public class PlayerController : MonoBehaviour
             {
                 Quaternion rotation = Quaternion.LookRotation(direction);
                 rb.MoveRotation(rotation);
+            }
+        }
+    }
+
+    void HandleShooting()
+    {
+        if (Input.GetMouseButtonDown(0)) // Click izquierdo
+        {
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+            {
+                Debug.Log("Disparaste a: " + hit.collider.name);
+
+                // Aca agregar efectos visuales o daño, por ejemplo:
+                // if (hit.collider.CompareTag("Enemy")) { ... }
+            }
+            else
+            {
+                Debug.Log("No se golpeó nada.");
             }
         }
     }
