@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 point = ray.GetPoint(distance);
             Vector3 direction = (point - transform.position);
-            direction.y = 0f; // mantenerlo en el plano horizontal
+            direction.y = 0f; // mantenerlo en el plano horizontal y solo gire izquierda-derecha (no arriba y abajo)
 
             if (direction != Vector3.zero)
             {
