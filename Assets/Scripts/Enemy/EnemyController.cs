@@ -9,9 +9,19 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        Move();
+    }
+    //Metodo para pasarle el player a enemy y pueda seguirlo con move
+    public void Initialize(Transform playerTarget)
+    {
+        player = playerTarget;
+    }
+
+    public void Move()
+    {
         if (player != null)
         {
-            // Calcula dirección hacia el player
+            // Calcula direcciï¿½n hacia el player
             Vector3 direction = (player.position - transform.position).normalized;
 
             // Mueve al enemigo hacia el player
