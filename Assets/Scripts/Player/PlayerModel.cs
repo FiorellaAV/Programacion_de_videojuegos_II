@@ -106,6 +106,25 @@ public class PlayerModel : MonoBehaviour
     // Dash
     public IEnumerator Dash(Rigidbody rb, float dashDistance, float dashDuration, bool isDashing, float dashCooldown, float lastDashTime)
     {
+        //// Verificar cooldown
+        //if (Time.time < lastDashTime + dashCooldown || isDashing)
+        //    yield break;
+
+        //isDashing = true;
+        //lastDashTime = Time.time;
+
+        //float elapsed = 0f;
+        //Vector3 dashDirection = transform.forward;
+
+        //while (elapsed < dashDuration)
+        //{
+        //    rb.MovePosition(rb.position + dashDirection * (dashDistance / dashDuration) * Time.fixedDeltaTime);
+        //    elapsed += Time.fixedDeltaTime;
+        //    yield return new WaitForFixedUpdate();
+        //}
+
+        //isDashing = false;
+
         // Verificar cooldown
         if (Time.time < lastDashTime + dashCooldown || isDashing)
             yield break;
@@ -113,12 +132,22 @@ public class PlayerModel : MonoBehaviour
         isDashing = true;
         lastDashTime = Time.time;
 
-        float elapsed = 0f;
         Vector3 dashDirection = transform.forward;
+        float maxDashDistance = dashDistance;
 
-        while (elapsed < dashDuration)
+        // Verificar colisión con raycast
+        if (Physics.Raycast(transform.position + Vector3.up * 0.5f, dashDirection, out RaycastHit hit, dashDistance))
         {
-            rb.MovePosition(rb.position + dashDirection * (dashDistance / dashDuration) * Time.fixedDeltaTime);
+            // Ajustar distancia máxima hasta el obstáculo, dejando un pequeño margen
+            maxDashDistance = hit.distance - 0.1f;
+        }
+
+        float elapsed = 0f;
+        float actualDashDuration = dashDuration * (maxDashDistance / dashDistance); // Ajustar duración si distancia es menor
+
+        while (elapsed < actualDashDuration)
+        {
+            rb.MovePosition(rb.position + dashDirection * (maxDashDistance / actualDashDuration) * Time.fixedDeltaTime);
             elapsed += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
@@ -131,11 +160,8 @@ public class PlayerModel : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             // Ejecutar dash
-            MonoBehaviour mono = GetComponent<MonoBehaviour>();
-            if (mono != null)
-            {
-                mono.StartCoroutine(Dash(rb, dashDistance, dashDuration, isDashing, dashCooldown, lastDashTime));
-            }
+            StartCoroutine(Dash(rb, dashDistance, dashDuration, isDashing, dashCooldown, lastDashTime));
+            
         }
     }
 
