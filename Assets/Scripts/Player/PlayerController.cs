@@ -18,6 +18,13 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius = 0.3f;
 
+    // Dash variables
+    public float dashDistance = 5f;
+    public float dashDuration = 0.2f;
+    private bool isDashing = false;
+    private float dashCooldown = 1f;
+    private float lastDashTime = -10f;
+
     private Animator animator;
 
 
@@ -55,6 +62,7 @@ public class PlayerController : MonoBehaviour
         // Manejar disparos y dibujar rayos de depuración
         pm.HandleShooting(rayDistance, lr);
         pm.DrawDebugRayFromPlayer(rayDistance);
+        pm.HandleDash(rb, dashDistance, dashDuration, isDashing, dashCooldown, lastDashTime);
 
         // Verificar si la animación de salto ha terminado
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") &&

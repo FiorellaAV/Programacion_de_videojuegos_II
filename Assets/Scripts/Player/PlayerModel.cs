@@ -103,6 +103,42 @@ public class PlayerModel : MonoBehaviour
         }
     }
 
+    // Dash
+    public IEnumerator Dash(Rigidbody rb, float dashDistance, float dashDuration, bool isDashing, float dashCooldown, float lastDashTime)
+    {
+        // Verificar cooldown
+        if (Time.time < lastDashTime + dashCooldown || isDashing)
+            yield break;
+
+        isDashing = true;
+        lastDashTime = Time.time;
+
+        float elapsed = 0f;
+        Vector3 dashDirection = transform.forward;
+
+        while (elapsed < dashDuration)
+        {
+            rb.MovePosition(rb.position + dashDirection * (dashDistance / dashDuration) * Time.fixedDeltaTime);
+            elapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        isDashing = false;
+    }
+
+    public void HandleDash(Rigidbody rb, float dashDistance, float dashDuration, bool isDashing, float dashCooldown, float lastDashTime)
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            // Ejecutar dash
+            MonoBehaviour mono = GetComponent<MonoBehaviour>();
+            if (mono != null)
+            {
+                mono.StartCoroutine(Dash(rb, dashDistance, dashDuration, isDashing, dashCooldown, lastDashTime));
+            }
+        }
+    }
+
     public void DrawDebugRayFromPlayer(float distance)
     {
         Vector3 origin = transform.position + Vector3.up;
