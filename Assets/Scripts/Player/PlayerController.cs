@@ -25,13 +25,11 @@ public class PlayerController : MonoBehaviour
     private float dashCooldown = 1f;
     private float lastDashTime = -10f;
 
-    private Animator animator;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         rb = GetComponent<Rigidbody>();
@@ -39,6 +37,7 @@ public class PlayerController : MonoBehaviour
         pv = GetComponent<PlayerView>();
         lr = GetComponent<LineRenderer>();
         mainCamera = Camera.main;
+        pv.Inicio();
     }
 
     void FixedUpdate()
@@ -53,7 +52,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && pm.IsGrounded(groundCheck, groundCheckRadius, groundLayer))
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            animator.SetBool("is_jumping", true); // Activar la animación de salto
+            pv.Saltar(); // Llamar al método de salto en PlayerView
         }
     }
 
@@ -64,12 +63,7 @@ public class PlayerController : MonoBehaviour
         pm.DrawDebugRayFromPlayer(rayDistance);
         pm.HandleDash(rb, dashDistance, dashDuration, isDashing, dashCooldown, lastDashTime);
 
-        // Verificar si la animación de salto ha terminado
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") &&
-            animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            animator.SetBool("is_jumping", false); // Desactivar la animación de salto
-        }
+        pv.VerificarSalto(); // Verificar si el jugador está en el suelo y desactivar la animación de salto
     }
 
 }

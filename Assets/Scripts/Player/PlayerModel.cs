@@ -6,7 +6,17 @@ using UnityEngine;
 
 public class PlayerModel : MonoBehaviour
 {
+
+    private PlayerView pv;
     private Animator animator;
+
+
+    void Start()
+    {
+        pv = GetComponent<PlayerView>();
+    }
+
+
 
     public void MovePlayer(float moveSpeed, Rigidbody rb)
     {
@@ -21,35 +31,10 @@ public class PlayerModel : MonoBehaviour
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
 
         // Actualizar animaciones
-        UpdateAnimationParameters(moveX, moveZ);
+        pv.ApuntarAlMouse(moveX, moveZ);
     }
 
-    private void UpdateAnimationParameters(float moveX, float moveZ)
-    {
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-        }
 
-        // Crear el vector de movimiento en el espacio global
-        Vector3 globalMovement = new Vector3(moveX, 0f, moveZ);
-
-        // Transformar el vector de movimiento al espacio local del personaje
-        Vector3 localMovement = transform.InverseTransformDirection(globalMovement);
-
-        // Si hay movimiento, actualizar aim_x y aim_y en el espacio local
-        if (localMovement != Vector3.zero)
-        {
-            animator.SetFloat("aim_x", localMovement.x);
-            animator.SetFloat("aim_y", localMovement.z);
-        }
-        else
-        {
-            // Si no hay movimiento, establecer ambos en 0
-            animator.SetFloat("aim_x", 0f);
-            animator.SetFloat("aim_y", 0f);
-        }
-    }
 
     public bool IsGrounded(Transform groundCheck, float groundCheckRadius, LayerMask groundLayer)
     {

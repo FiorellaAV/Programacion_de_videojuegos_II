@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d3091a534ccb2a24d8e7f1d0658d0ee5
+guid: 4d9ec1c5ea24b754fae16873ddb6ad67
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Pistol_Run_Back
+      name: Player_Pistol_Strafe_Left
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 32
+      lastFrame: 34
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

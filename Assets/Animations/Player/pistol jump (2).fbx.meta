@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3da06a23e735dfb4cabb7a8c434a2e04
+guid: 6c85c067449e7ac4ba0598d883e98e9d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Pistol_Idle
+      name: Player_Pistol_Jump_2
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 80
+      lastFrame: 48
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

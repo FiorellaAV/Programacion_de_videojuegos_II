@@ -727,6 +727,8 @@ MonoBehaviour:
     m_Bits: 64
   groundCheck: {fileID: 33887979}
   groundCheckRadius: 0.3
+  dashDistance: 5
+  dashDuration: 0.2
 --- !u!54 &817114762
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1173,11 +1175,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c207202fdaf327549a88f878a897e0ab,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 817114761}
+      addedObject: {fileID: 817114766}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c207202fdaf327549a88f878a897e0ab,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 817114760}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c207202fdaf327549a88f878a897e0ab,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 817114761}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c207202fdaf327549a88f878a897e0ab,
         type: 3}
       insertIndex: -1
@@ -1186,10 +1192,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 817114765}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c207202fdaf327549a88f878a897e0ab,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 817114766}
   m_SourcePrefab: {fileID: 100100000, guid: c207202fdaf327549a88f878a897e0ab, type: 3}
 --- !u!1 &1618290114
 GameObject:
