@@ -23,6 +23,10 @@ public class PlayerModel : MonoBehaviour
 
     public void MovePlayer(float moveSpeed, Rigidbody rb)
     {
+        //Para que el jugador deje de moverse si el juego termino
+        if (GameManager.Instance != null && GameManager.Instance.gameEnded)
+            return;
+
         // Obtener entrada del jugador
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
@@ -59,7 +63,7 @@ public class PlayerModel : MonoBehaviour
             {
                 Quaternion rotation = Quaternion.LookRotation(direction);
 
-                // Ajustar la rotación con un offset para compensar la orientación inicial
+                // Ajustar la rotaciï¿½n con un offset para compensar la orientaciï¿½n inicial
                 Quaternion offset = Quaternion.Euler(0f, 0f, 0f);
                 rb.MoveRotation(rotation * offset);
             }
@@ -68,9 +72,13 @@ public class PlayerModel : MonoBehaviour
 
     public void HandleShooting(float distance, LineRenderer lineRenderer)
     {
+        //Para que el jugador deje de disparar si el juego termino
+        if (GameManager.Instance != null && GameManager.Instance.gameEnded)
+            return;
+
         if (Input.GetMouseButtonDown(0)) // Click izquierdo
         {
-            Vector3 origin = transform.position + Vector3.up * 0.5f; // opcional: levantarlo un poco si querés (tener en cuenta la altura del barril)
+            Vector3 origin = transform.position + Vector3.up * 0.5f; // opcional: levantarlo un poco si querï¿½s (tener en cuenta la altura del barril)
             Vector3 direction = transform.forward;
 
             if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
@@ -78,11 +86,16 @@ public class PlayerModel : MonoBehaviour
                 UnityEngine.Debug.Log("Disparaste a: " + hit.collider.name);
                 DrawShotLine(origin, hit.point, lineRenderer);
 
-                // Agregar efectos visuales o daño
+                // Agregar efectos visuales o daï¿½o
                 if (hit.collider.CompareTag("Enemy"))
                 {
                     GameObject bloodVFX = GameObject.Instantiate(Resources.Load<GameObject>("Simple FX Kit/Prefabs/Blood Splash"), hit.collider.transform.position, Quaternion.identity);
                     GameObject.Destroy(bloodVFX, 1f); // Destruir efecto tras 2s
+
+                    if (GameManager.Instance != null)
+                    {
+                        GameManager.Instance.EnemyKilled();
+                    }
                     Destroy(hit.collider.gameObject);
                 }
 
@@ -91,7 +104,7 @@ public class PlayerModel : MonoBehaviour
                     Vector3 explosionPos = hit.collider.transform.position;
                     Destroy(hit.collider.gameObject);
 
-                    float explosionRadius = 5f; // ajustá según tu necesidad
+                    float explosionRadius = 5f; // ajustï¿½ segï¿½n tu necesidad
                     float explosionDamage = 200f;
 
                     Explode(explosionPos, explosionRadius, explosionDamage);
@@ -99,7 +112,7 @@ public class PlayerModel : MonoBehaviour
             }
             else
             {
-                UnityEngine.Debug.Log("No se golpeó nada.");
+                UnityEngine.Debug.Log("No se golpeï¿½ nada.");
             }
         }
     }
@@ -114,21 +127,24 @@ public class PlayerModel : MonoBehaviour
 
         //UnityEngine.Debug.DrawLine(position, position + Vector3.up * 2, Color.red, 1f);
 
-        // Detectar enemigos en área
+        // Detectar enemigos en ï¿½rea
         Collider[] colliders = Physics.OverlapSphere(position, radius);
         foreach (Collider nearby in colliders)
         {
             if (nearby.CompareTag("Enemy"))
             {
-                // Aquí podrías aplicar daño si tenés una clase Enemy con TakeDamage
+                // Aquï¿½ podrï¿½as aplicar daï¿½o si tenï¿½s una clase Enemy con TakeDamage
                 // Ejemplo:
                 // nearby.GetComponent<Enemy>().TakeDamage(damage);
-
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.EnemyKilled();
+                }
                 GameObject.Destroy(nearby.gameObject); // Temporal: destruir directamente
             }
             if (nearby.CompareTag("Player"))
             {
-                // Aquí podrías aplicar daño si tenés una clase Enemy con TakeDamage
+                // Aquï¿½ podrï¿½as aplicar daï¿½o si tenï¿½s una clase Enemy con TakeDamage
                 // Ejemplo:
                 nearby.GetComponent<PlayerModel>().TakeDamage(damage);
             }
@@ -167,15 +183,15 @@ public class PlayerModel : MonoBehaviour
         Vector3 dashDirection = transform.forward;
         float maxDashDistance = dashDistance;
 
-        // Verificar colisión con raycast
+        // Verificar colisiï¿½n con raycast
         if (Physics.Raycast(transform.position + Vector3.up * 0.5f, dashDirection, out RaycastHit hit, dashDistance))
         {
-            // Ajustar distancia máxima hasta el obstáculo, dejando un pequeño margen
+            // Ajustar distancia mï¿½xima hasta el obstï¿½culo, dejando un pequeï¿½o margen
             maxDashDistance = hit.distance - 0.1f;
         }
 
         float elapsed = 0f;
-        float actualDashDuration = dashDuration * (maxDashDistance / dashDistance); // Ajustar duración si distancia es menor
+        float actualDashDuration = dashDuration * (maxDashDistance / dashDistance); // Ajustar duraciï¿½n si distancia es menor
 
         while (elapsed < actualDashDuration)
         {
@@ -193,7 +209,7 @@ public class PlayerModel : MonoBehaviour
         {
             // Ejecutar dash
             StartCoroutine(Dash(rb, dashDistance, dashDuration, isDashing, dashCooldown, lastDashTime));
-            
+
         }
     }
 
@@ -224,7 +240,7 @@ public class PlayerModel : MonoBehaviour
     public void TakeDamage(float amount)
     {
         health -= amount;
-        UnityEngine.Debug.Log("Player recibió daño. Salud restante: " + health);
+        UnityEngine.Debug.Log("Player recibiï¿½ daï¿½o. Salud restante: " + health);
         if (health <= 0)
         {
             pv.Die();
@@ -234,8 +250,8 @@ public class PlayerModel : MonoBehaviour
 
     private void Die()
     {
-        UnityEngine.Debug.Log("¡El jugador ha muerto!");
-        // Podés agregar animaciones, sonido, pantalla de derrota, etc.
+        UnityEngine.Debug.Log("ï¿½El jugador ha muerto!");
+        // Podï¿½s agregar animaciones, sonido, pantalla de derrota, etc.
         StartCoroutine(DieAfterDelay(2000f)); // Espera 2 segundos
     }
 

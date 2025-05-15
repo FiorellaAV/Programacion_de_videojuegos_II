@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public Transform player;
     public float spawnInterval = 5f;
     public int enemiesPerWave = 4;
+    private bool isSpawning = true;
 
     void Start()
     {
@@ -18,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnWaveLoop()
     {
-        while (true)
+        while (isSpawning)
         {
             for (int i = 0; i < enemiesPerWave; i++)
             {
@@ -28,7 +29,10 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(spawnInterval);
         }
     }
-
+    public void StopSpawning()
+    {
+        isSpawning = false;
+    }
     void SpawnEnemy(Vector3 position)
     {
         // Ajustar la altura del enemigo
@@ -38,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
         GameObject newEnemy = Instantiate(enemyPrefab, position, Quaternion.identity);
         newEnemy.tag = "Enemy";
 
-        // Asegurar que la referencia al jugador esté asignada
+        // Asegurar que la referencia al jugador estï¿½ asignada
         if (player == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -48,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
             }
             else
             {
-                UnityEngine.Debug.LogWarning("No se encontró un objeto con la etiqueta 'Player' para asignar al enemigo.");
+                UnityEngine.Debug.LogWarning("No se encontrï¿½ un objeto con la etiqueta 'Player' para asignar al enemigo.");
                 return; // Salir si no hay jugador
             }
         }
