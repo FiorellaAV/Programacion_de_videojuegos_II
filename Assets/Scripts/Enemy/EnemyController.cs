@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    NavMeshAgent agent;
     public Transform player;      // Asignar desde el Inspector
     public float moveSpeed = 3f;  // Velocidad de movimiento
     public float damage = 10f;
@@ -34,8 +36,10 @@ public class EnemyController : MonoBehaviour
     {
         if (player != null)
         {
+            agent = GetComponent<NavMeshAgent>();
+            agent.SetDestination(player.position);
             // Calcula direcci�n hacia el player
-            Vector3 direction = (player.position - transform.position).normalized;
+            /*Vector3 direction = (player.position - transform.position).normalized;
 
             // Mueve al enemigo hacia el player
             transform.position += direction * moveSpeed * Time.deltaTime;
@@ -46,7 +50,7 @@ public class EnemyController : MonoBehaviour
             {
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-            }
+            }*/
         }
     }
 
