@@ -71,5 +71,14 @@ public class PlayerView : MonoBehaviour
         }
     }
 
+    public void Die()
+    {
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+        animator.SetBool("is_alive", false);
+    }
+
 
 }

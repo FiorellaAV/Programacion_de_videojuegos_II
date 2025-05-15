@@ -25,8 +25,6 @@ public class PlayerController : MonoBehaviour
     private float dashCooldown = 1f;
     private float lastDashTime = -10f;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +40,12 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+
+        if (pm.health <= 0f)
+        {
+            return; // Salir si el jugador está muerto
+        }
+
         // Mover al jugador
         pm.MovePlayer(moveSpeed, rb);
 
@@ -58,6 +62,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (pm.health <= 0f)
+        {
+            return; // Salir si el jugador está muerto
+        }
+
         // Manejar disparos y dibujar rayos de depuración
         pm.HandleShooting(rayDistance, lr);
         pm.DrawDebugRayFromPlayer(rayDistance);
@@ -65,5 +74,6 @@ public class PlayerController : MonoBehaviour
 
         pv.VerifyJump(); // Verificar si el jugador está en el suelo y desactivar la animación de salto
     }
+
 
 }

@@ -11,6 +11,8 @@ public class PlayerModel : MonoBehaviour
     private PlayerView pv;
     private Animator animator;
 
+    public float health = 200f;
+
 
     void Start()
     {
@@ -90,7 +92,7 @@ public class PlayerModel : MonoBehaviour
                     Destroy(hit.collider.gameObject);
 
                     float explosionRadius = 5f; // ajustá según tu necesidad
-                    float explosionDamage = 100f;
+                    float explosionDamage = 200f;
 
                     Explode(explosionPos, explosionRadius, explosionDamage);
                 }
@@ -123,6 +125,12 @@ public class PlayerModel : MonoBehaviour
                 // nearby.GetComponent<Enemy>().TakeDamage(damage);
 
                 GameObject.Destroy(nearby.gameObject); // Temporal: destruir directamente
+            }
+            if (nearby.CompareTag("Player"))
+            {
+                // Aquí podrías aplicar daño si tenés una clase Enemy con TakeDamage
+                // Ejemplo:
+                nearby.GetComponent<PlayerModel>().TakeDamage(damage);
             }
         }
     }
@@ -210,5 +218,30 @@ public class PlayerModel : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         lineRenderer.positionCount = 0;
+    }
+
+
+    public void TakeDamage(float amount)
+    {
+        health -= amount;
+        UnityEngine.Debug.Log("Player recibió daño. Salud restante: " + health);
+        if (health <= 0)
+        {
+            pv.Die();
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        UnityEngine.Debug.Log("¡El jugador ha muerto!");
+        // Podés agregar animaciones, sonido, pantalla de derrota, etc.
+        StartCoroutine(DieAfterDelay(2000f)); // Espera 2 segundos
+    }
+
+    private IEnumerator DieAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        //Destroy(gameObject);
     }
 }

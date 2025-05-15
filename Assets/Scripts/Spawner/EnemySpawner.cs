@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -30,25 +31,40 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy(Vector3 position)
     {
-        
-        position.y = enemyPrefab.GetComponent<CapsuleCollider>().height / 2f; // calculo la posion correcta para los enemigos
+        // Ajustar la altura del enemigo
+        position.y = enemyPrefab.GetComponent<CapsuleCollider>().height / 2f;
+
+        // Instanciar el enemigo
         GameObject newEnemy = Instantiate(enemyPrefab, position, Quaternion.identity);
-        newEnemy.tag = "Enemy"; // Aseguro que tengan el tag
+        newEnemy.tag = "Enemy";
 
-        //EnemyView view = newEnemy.GetComponent<EnemyView>();
-        EnemyModel model = new EnemyModel(); // por si queremos customizar
-
-        EnemyController controller = newEnemy.GetComponent<EnemyController>(); //A los enemy le paso el player para que en el script del controller lo sigan
-    
+        // Asegurar que la referencia al jugador esté asignada
         if (player == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj != null)
             {
-                controller.Initialize(playerObj.transform);
+                player = playerObj.transform;
+            }
+            else
+            {
+                UnityEngine.Debug.LogWarning("No se encontró un objeto con la etiqueta 'Player' para asignar al enemigo.");
+                return; // Salir si no hay jugador
             }
         }
-        
 
+        // Asignar el jugador al EnemyController
+        EnemyController controller = newEnemy.GetComponent<EnemyController>();
+        if (controller != null)
+        {
+            controller.Initialize(player);
+        }
+        else
+        {
+            UnityEngine.Debug.LogWarning("Enemy instanciado no tiene EnemyController.");
+        }
     }
 }
+
+
+
