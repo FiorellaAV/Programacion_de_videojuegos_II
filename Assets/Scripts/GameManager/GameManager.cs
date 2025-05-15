@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        
         UpdateCounterText();
         if (victoryPanel != null)
             victoryPanel.SetActive(false);
