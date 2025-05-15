@@ -86,7 +86,7 @@ public class PlayerModel : MonoBehaviour
                     Destroy(hit.collider.gameObject);
                 }
 
-                if (hit.collider.CompareTag("barrel"))
+                if (hit.collider.CompareTag("Barrel"))
                 {
                     Vector3 explosionPos = hit.collider.transform.position;
                     Destroy(hit.collider.gameObject);
