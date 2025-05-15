@@ -8,12 +8,16 @@ public class PlayerView : MonoBehaviour
 
     private Animator animator;
 
-    public void Start()
+    public void Awake()
     {
         if (animator == null)
         {
             animator = GetComponent<Animator>();
         }
+    }
+
+    public void Start()
+    {
         animator.SetBool("is_alive", true); // Desactiva animación de muerte al iniciar
     }
 
@@ -25,6 +29,12 @@ public class PlayerView : MonoBehaviour
             animator = GetComponent<Animator>();
         }
         animator.SetBool("is_jumping", true); // Activar la animación de salto
+    }
+
+
+    public void Dash()
+    {
+        // No hay animación de Dash, pero si la necesitas, puedes agregarla aquí
     }
 
 

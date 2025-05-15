@@ -14,7 +14,7 @@ public class PlayerModel : MonoBehaviour
     public float health = 200f;
 
 
-    void Start()
+    void Awake()
     {
         pv = GetComponent<PlayerView>();
     }

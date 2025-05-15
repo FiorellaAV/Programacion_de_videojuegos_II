@@ -5,27 +5,28 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
     private Rigidbody rb;
     private PlayerModel pm;
     private PlayerView pv;
-    private Camera mainCamera;
     private LineRenderer lr;
+    private Camera mainCamera;
 
-    public float jumpForce = 50f;
-    public float rayDistance = 100f;
     public LayerMask groundLayer;
     public Transform groundCheck;
+
+    public float moveSpeed = 5f;
+    public float jumpForce = 50f;
+    public float rayDistance = 100f;
     public float groundCheckRadius = 0.3f;
 
     // Dash variables
+    private bool isDashing = false;
     public float dashDistance = 5f;
     public float dashDuration = 0.2f;
-    private bool isDashing = false;
     private float dashCooldown = 1f;
     private float lastDashTime = -10f;
 
-    // Inicialización de referencias internas
+    //  Inicialización de referencias internas
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    // Lógica de arranque
+    //  Lógica de arranque
     void Start()
     {
         Cursor.visible = true;
