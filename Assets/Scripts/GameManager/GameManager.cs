@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -29,6 +27,14 @@ public class GameManager : MonoBehaviour
         UpdateCounterText();
         if (victoryPanel != null)
             victoryPanel.SetActive(false);
+    }
+
+    private void FixedUpdate()
+    {
+        if (gameEnded)
+        {
+            Debug.Log("game ended");
+        }
     }
 
     public void EnemyKilled()
@@ -60,5 +66,6 @@ public class GameManager : MonoBehaviour
         if (spawner != null)
             spawner.StopSpawning();
     }
+    
 }
 
