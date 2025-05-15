@@ -25,17 +25,23 @@ public class PlayerController : MonoBehaviour
     private float dashCooldown = 1f;
     private float lastDashTime = -10f;
 
-    // Start is called before the first frame update
-    void Start()
+    // Inicialización de referencias internas
+    void Awake()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerModel>();
         pv = GetComponent<PlayerView>();
         lr = GetComponent<LineRenderer>();
         mainCamera = Camera.main;
-        pv.Start();
+    }
+
+    // Lógica de arranque
+    void Start()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        pv.Start(); // Si PlayerView tiene su propio Start(), llamalo explícitamente
     }
 
     void FixedUpdate()
