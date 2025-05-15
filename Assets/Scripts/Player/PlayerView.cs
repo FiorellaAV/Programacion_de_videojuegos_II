@@ -8,7 +8,7 @@ public class PlayerView : MonoBehaviour
 
     private Animator animator;
 
-    public void Inicio()
+    public void Start()
     {
         if (animator == null)
         {
@@ -18,7 +18,7 @@ public class PlayerView : MonoBehaviour
     }
 
 
-    public void Saltar()
+    public void Jump()
     {
         if (animator == null)
         {
@@ -28,7 +28,7 @@ public class PlayerView : MonoBehaviour
     }
 
 
-    public void VerificarSalto()
+    public void VerifyJump()
     {
         if (animator == null)
         {
@@ -44,7 +44,7 @@ public class PlayerView : MonoBehaviour
     }
 
 
-    public void ApuntarAlMouse(float moveX, float moveZ)
+    public void AimToMouse(float moveX, float moveZ)
     {
         if (animator == null)
         {

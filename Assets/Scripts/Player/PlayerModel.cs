@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ public class PlayerModel : MonoBehaviour
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
 
         // Actualizar animaciones
-        pv.ApuntarAlMouse(moveX, moveZ);
+        pv.AimToMouse(moveX, moveZ);
     }
 
 
@@ -67,23 +68,61 @@ public class PlayerModel : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) // Click izquierdo
         {
-            Vector3 origin = transform.position + Vector3.up * 1.5f; // opcional: levantarlo un poco si querés
+            Vector3 origin = transform.position + Vector3.up * 0.5f; // opcional: levantarlo un poco si querés (tener en cuenta la altura del barril)
             Vector3 direction = transform.forward;
 
             if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
             {
-                Debug.Log("Disparaste a: " + hit.collider.name);
+                UnityEngine.Debug.Log("Disparaste a: " + hit.collider.name);
                 DrawShotLine(origin, hit.point, lineRenderer);
 
                 // Agregar efectos visuales o daño
                 if (hit.collider.CompareTag("Enemy"))
                 {
+                    GameObject bloodVFX = GameObject.Instantiate(Resources.Load<GameObject>("Simple FX Kit/Prefabs/Blood Splash"), hit.collider.transform.position, Quaternion.identity);
+                    GameObject.Destroy(bloodVFX, 1f); // Destruir efecto tras 2s
                     Destroy(hit.collider.gameObject);
+                }
+
+                if (hit.collider.CompareTag("barrel"))
+                {
+                    Vector3 explosionPos = hit.collider.transform.position;
+                    Destroy(hit.collider.gameObject);
+
+                    float explosionRadius = 5f; // ajustá según tu necesidad
+                    float explosionDamage = 100f;
+
+                    Explode(explosionPos, explosionRadius, explosionDamage);
                 }
             }
             else
             {
-                Debug.Log("No se golpeó nada.");
+                UnityEngine.Debug.Log("No se golpeó nada.");
+            }
+        }
+    }
+
+
+
+    private void Explode(Vector3 position, float radius, float damage)
+    {
+        // Efecto visual (opcional)
+        GameObject explosionVFX = GameObject.Instantiate(Resources.Load<GameObject>("Simple FX Kit/Prefabs/Explosion Fire"), position, Quaternion.identity);
+        GameObject.Destroy(explosionVFX, 2f); // Destruir efecto tras 2s
+
+        //UnityEngine.Debug.DrawLine(position, position + Vector3.up * 2, Color.red, 1f);
+
+        // Detectar enemigos en área
+        Collider[] colliders = Physics.OverlapSphere(position, radius);
+        foreach (Collider nearby in colliders)
+        {
+            if (nearby.CompareTag("Enemy"))
+            {
+                // Aquí podrías aplicar daño si tenés una clase Enemy con TakeDamage
+                // Ejemplo:
+                // nearby.GetComponent<Enemy>().TakeDamage(damage);
+
+                GameObject.Destroy(nearby.gameObject); // Temporal: destruir directamente
             }
         }
     }
@@ -155,7 +194,7 @@ public class PlayerModel : MonoBehaviour
         Vector3 origin = transform.position + Vector3.up;
         Vector3 direction = transform.forward;
 
-        Debug.DrawRay(origin, direction * distance, Color.green);
+        UnityEngine.Debug.DrawRay(origin, direction * distance, Color.green);
     }
 
     private void DrawShotLine(Vector3 start, Vector3 end, LineRenderer lineRenderer)

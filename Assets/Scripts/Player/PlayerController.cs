@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         pv = GetComponent<PlayerView>();
         lr = GetComponent<LineRenderer>();
         mainCamera = Camera.main;
-        pv.Inicio();
+        pv.Start();
     }
 
     void FixedUpdate()
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && pm.IsGrounded(groundCheck, groundCheckRadius, groundLayer))
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            pv.Saltar(); // Llamar al método de salto en PlayerView
+            pv.Jump(); // Llamar al método de salto en PlayerView
         }
     }
 
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         pm.DrawDebugRayFromPlayer(rayDistance);
         pm.HandleDash(rb, dashDistance, dashDuration, isDashing, dashCooldown, lastDashTime);
 
-        pv.VerificarSalto(); // Verificar si el jugador está en el suelo y desactivar la animación de salto
+        pv.VerifyJump(); // Verificar si el jugador está en el suelo y desactivar la animación de salto
     }
 
 }
