@@ -111,9 +111,10 @@ public class GameManager : MonoBehaviour
             victoryPanel.SetActive(true);
 
         // Detener el spawner
-        EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
+        /*EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
         if (spawner != null)
-            spawner.StopSpawning();
+            spawner.StopSpawning();*/
+        Time.timeScale = 0f;
     }
 
 
@@ -137,7 +138,7 @@ public class GameManager : MonoBehaviour
     public void ReturnToMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu"); // o el nombre de tu escena
+        SceneManager.LoadScene("Menu");
     }
 
 }
