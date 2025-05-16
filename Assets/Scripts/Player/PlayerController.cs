@@ -20,11 +20,9 @@ public class PlayerController : MonoBehaviour
     public float groundCheckRadius = 0.3f;
 
     // Dash variables
-    private bool isDashing = false;
     public float dashDistance = 5f;
     public float dashDuration = 0.2f;
-    private float dashCooldown = 1f;
-    private float lastDashTime = -10f;
+    private float dashCooldown = 2f;
 
     //  Inicialización de referencias internas
     void Awake()
@@ -77,7 +75,8 @@ public class PlayerController : MonoBehaviour
         // Manejar disparos y dibujar rayos de depuración
         pm.HandleShooting(rayDistance, lr);
         pm.DrawDebugRayFromPlayer(rayDistance);
-        pm.HandleDash(rb, dashDistance, dashDuration, isDashing, dashCooldown, lastDashTime);
+        pm.HandleDash(this, rb, dashDistance, dashDuration, dashCooldown);
+
 
         pv.VerifyJump(); // Verificar si el jugador está en el suelo y desactivar la animación de salto
     }

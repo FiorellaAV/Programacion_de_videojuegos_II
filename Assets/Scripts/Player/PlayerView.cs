@@ -34,7 +34,7 @@ public class PlayerView : MonoBehaviour
 
     public void Dash()
     {
-        // No hay animación de Dash, pero si la necesitas, puedes agregarla aquí
+        // No hay animación de Dash
     }
 
 
