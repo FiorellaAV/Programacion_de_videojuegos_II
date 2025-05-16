@@ -252,18 +252,15 @@ public class PlayerModel : MonoBehaviour
     private void die()
     {
         UnityEngine.Debug.Log("�El jugador ha muerto!");
-        // Pod�s agregar animaciones, sonido, pantalla de derrota, etc.
+        // Podés agregar animaciones, sonido, pantalla de derrota, etc.
         StartCoroutine(DieAfterDelay(2f)); // Espera 2 segundos
     }
 
     private IEnumerator DieAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        //Destroy(gameObject);
         // Llama a GameOver
         GameManager.Instance.GameOver();
-        // Reinicio la escena?
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public float GetHealth()
