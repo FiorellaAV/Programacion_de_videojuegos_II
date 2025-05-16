@@ -5,86 +5,82 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
     private Rigidbody rb;
+    private PlayerModel pm;
+    private PlayerView pv;
+    private LineRenderer lr;
     private Camera mainCamera;
 
-    public float jumpForce = 5f;
     public LayerMask groundLayer;
     public Transform groundCheck;
+
+    public float moveSpeed = 5f;
+    public float jumpForce = 50f;
+    public float rayDistance = 100f;
     public float groundCheckRadius = 0.3f;
 
+    // Dash variables
+    private bool isDashing = false;
+    public float dashDistance = 5f;
+    public float dashDuration = 0.2f;
+    private float dashCooldown = 1f;
+    private float lastDashTime = -10f;
 
+    //  Inicialización de referencias internas
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        pm = GetComponent<PlayerModel>();
+        pv = GetComponent<PlayerView>();
+        lr = GetComponent<LineRenderer>();
+        mainCamera = Camera.main;
+    }
+
+    //  Lógica de arranque
     void Start()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        rb = GetComponent<Rigidbody>();
-        mainCamera = Camera.main;
+
+        pv.Start(); // Si PlayerView tiene su propio Start(), llamalo explícitamente
     }
 
-    //Uso fixedUpdate en lugar de Update porque es mejor para el tema de fisicas, ya que se ejecuta por defecto cada 0.02s     
     void FixedUpdate()
     {
-        MovePlayer();
-        RotateTowardsMouse();
-        if (Input.GetKey(KeyCode.Space) && IsGrounded())
+
+        if (pm.health <= 0f)
+        {
+            return; // Salir si el jugador está muerto
+        }
+
+        // Mover al jugador
+        pm.MovePlayer(moveSpeed, rb);
+
+        // Rotar al jugador hacia el mouse
+        pm.RotateTowardsMouse(mainCamera, rb);
+
+        // Saltar si se presiona la barra espaciadora
+        if (Input.GetKey(KeyCode.Space) && pm.IsGrounded(groundCheck, groundCheckRadius, groundLayer))
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            pv.Jump(); // Llamar al método de salto en PlayerView
         }
-        HandleShooting();
     }
 
-    void MovePlayer()
+    void Update()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
-
-        Vector3 movement = new Vector3(moveX, 0f, moveZ).normalized;
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-    }
-
-    bool IsGrounded()
-    {
-        return Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
-    }
-
-
-    void RotateTowardsMouse()
-    {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-
-        if (groundPlane.Raycast(ray, out float distance))
+        if (pm.health <= 0f)
         {
-            Vector3 point = ray.GetPoint(distance);
-            Vector3 direction = (point - transform.position);
-            direction.y = 0f; // mantenerlo en el plano horizontal
-
-            if (direction != Vector3.zero)
-            {
-                Quaternion rotation = Quaternion.LookRotation(direction);
-                rb.MoveRotation(rotation);
-            }
+            return; // Salir si el jugador está muerto
         }
+
+        // Manejar disparos y dibujar rayos de depuración
+        pm.HandleShooting(rayDistance, lr);
+        pm.DrawDebugRayFromPlayer(rayDistance);
+        pm.HandleDash(rb, dashDistance, dashDuration, isDashing, dashCooldown, lastDashTime);
+
+        pv.VerifyJump(); // Verificar si el jugador está en el suelo y desactivar la animación de salto
     }
 
-    void HandleShooting()
-    {
-        if (Input.GetMouseButtonDown(0)) // Click izquierdo
-        {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f))
-            {
-                Debug.Log("Disparaste a: " + hit.collider.name);
 
-                // Aca agregar efectos visuales o daÃ±o, por ejemplo:
-                // if (hit.collider.CompareTag("Enemy")) { ... }
-            }
-            else
-            {
-                Debug.Log("No se golpeÃ³ nada.");
-            }
-        }
-    }
 }
