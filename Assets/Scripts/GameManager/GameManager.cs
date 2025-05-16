@@ -20,8 +20,6 @@ public class GameManager : MonoBehaviour
     public int enemiesKilled = 0;
     public int victoryCount = 50;
     public TextMeshProUGUI killCounterText;
-    public GameObject victoryPanel;
-    public bool gameEnded = false;
     public PlayerModel player;
     public Image healthBar;
 
