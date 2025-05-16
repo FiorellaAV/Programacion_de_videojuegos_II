@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         GameObject newPlayer = Instantiate(playerPrefab, position, Quaternion.identity);
         newPlayer.tag = "Player";
 
-        player = GameObject.Find("player(Clone)").GetComponent<PlayerModel>();
+        player = GameObject.Find("Player(Clone)").GetComponent<PlayerModel>();
 
         maxHealth = player.GetHealth();
     }
