@@ -52,8 +52,10 @@ public class GameManager : MonoBehaviour
         // Instanciar el enemigo
         GameObject newPlayer = Instantiate(playerPrefab, position, Quaternion.identity);
         newPlayer.tag = "Player";
-        
-        maxHealth = player.getHealth();
+
+        player = GameObject.Find("player(Clone)").GetComponent<PlayerModel>();
+
+        maxHealth = player.GetHealth();
     }
 
     private void FixedUpdate()
@@ -66,14 +68,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        healthBarFiller();
+        HealthBarFiller();
 
         lerpSpeed = 3 * Time.deltaTime;
     }
 
-    void healthBarFiller()
+    void HealthBarFiller()
     {
-        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, player.getHealth() / maxHealth, lerpSpeed);
+        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, player.GetHealth() / maxHealth, lerpSpeed);
     }
 
     public void EnemyKilled()

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class PlayerModel : MonoBehaviour
 {
 
-    private PlayerView pv;
+    private PlayerView playerView;
     private Animator animator;
 
     public float health = 200f;
@@ -17,7 +17,7 @@ public class PlayerModel : MonoBehaviour
 
     void Awake()
     {
-        pv = GetComponent<PlayerView>();
+        playerView = GetComponent<PlayerView>();
     }
 
 
@@ -39,7 +39,7 @@ public class PlayerModel : MonoBehaviour
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
 
         // Actualizar animaciones
-        pv.AimToMouse(moveX, moveZ);
+        playerView.AimToMouse(moveX, moveZ);
     }
 
 
@@ -244,12 +244,12 @@ public class PlayerModel : MonoBehaviour
         UnityEngine.Debug.Log("Player recibi� da�o. Salud restante: " + health);
         if (health <= 0)
         {
-            pv.Die();
-            Die();
+            playerView.Die();
+            die();
         }
     }
 
-    private void Die()
+    private void die()
     {
         UnityEngine.Debug.Log("�El jugador ha muerto!");
         // Pod�s agregar animaciones, sonido, pantalla de derrota, etc.
