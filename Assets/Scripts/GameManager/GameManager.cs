@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         HealthBarFiller();
+        healthBarColorChanger();
 
         lerpSpeed = 3 * Time.deltaTime;
     }
@@ -93,6 +94,13 @@ public class GameManager : MonoBehaviour
     {
         if (killCounterText != null)
             killCounterText.text = "Enemigos eliminados: " + enemiesKilled + "/" + victoryCount;
+    }
+
+    void healthBarColorChanger()
+    {
+        Color healthColor = Color.Lerp(Color.red, Color.green, (player.GetHealth() / maxHealth));
+
+        healthBar.color = healthColor;
     }
 
     void Victory()
