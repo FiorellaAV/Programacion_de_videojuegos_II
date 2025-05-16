@@ -260,4 +260,9 @@ public class PlayerModel : MonoBehaviour
         yield return new WaitForSeconds(delay);
         //Destroy(gameObject);
     }
+
+    public float getHealth()
+    {
+       return health;
+    }
 }

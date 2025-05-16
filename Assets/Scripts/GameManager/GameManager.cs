@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -15,6 +13,13 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI killCounterText;
     public GameObject victoryPanel;
     public bool gameEnded = false;
+    public PlayerModel player;
+    public Image healthBar;
+
+    float maxHealth;
+    float lerpSpeed;
+
+    
 
     void Awake()
     {
@@ -22,6 +27,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+
+        maxHealth = player.getHealth();
     }
 
     void Start()
@@ -30,6 +37,18 @@ public class GameManager : MonoBehaviour
         UpdateCounterText();
         if (victoryPanel != null)
             victoryPanel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        healthBarFiller();
+
+        lerpSpeed = 3 * Time.deltaTime;
+    }
+
+    void healthBarFiller()
+    {
+        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, player.getHealth() / maxHealth, lerpSpeed);
     }
 
     public void EnemyKilled()
