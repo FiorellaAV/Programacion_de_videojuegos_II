@@ -903,11 +903,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-<<<<<<< HEAD
-  m_Father: {fileID: 0}
-=======
   m_Father: {fileID: 1295310658}
->>>>>>> dcc85ae3d5ababb1a5e31546beabf5bf37cd1272
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -2635,11 +2631,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
-<<<<<<< HEAD
---- !u!1 &2103167881
-=======
 --- !u!1 &1968205200
->>>>>>> dcc85ae3d5ababb1a5e31546beabf5bf37cd1272
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2647,26 +2639,16 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< HEAD
-  - component: {fileID: 2103167883}
-  - component: {fileID: 2103167882}
-  m_Layer: 0
-  m_Name: NavMesh
-=======
   - component: {fileID: 1968205201}
   - component: {fileID: 1968205203}
   - component: {fileID: 1968205202}
   m_Layer: 5
   m_Name: VictoryPanel
->>>>>>> dcc85ae3d5ababb1a5e31546beabf5bf37cd1272
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< HEAD
---- !u!114 &2103167882
-=======
 --- !u!224 &1968205201
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2688,41 +2670,11 @@ RectTransform:
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1968205202
->>>>>>> dcc85ae3d5ababb1a5e31546beabf5bf37cd1272
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 2103167881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 119
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 07d918f11ad2e3a43b4126dd780e966b, type: 2}
-  m_BuildHeightMesh: 0
---- !u!4 &2103167883
-Transform:
-=======
   m_GameObject: {fileID: 1968205200}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2749,15 +2701,10 @@ Transform:
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1968205203
 CanvasRenderer:
->>>>>>> dcc85ae3d5ababb1a5e31546beabf5bf37cd1272
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 2103167881}
-  serializedVersion: 2
-=======
   m_GameObject: {fileID: 1968205200}
   m_CullTransparentMesh: 1
 --- !u!1 &2123218988
@@ -2785,16 +2732,11 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2123218988}
->>>>>>> dcc85ae3d5ababb1a5e31546beabf5bf37cd1272
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-<<<<<<< HEAD
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-=======
   m_Father: {fileID: 1968205201}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2899,7 +2841,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2123218988}
   m_CullTransparentMesh: 1
->>>>>>> dcc85ae3d5ababb1a5e31546beabf5bf37cd1272
 --- !u!1 &2144931683
 GameObject:
   m_ObjectHideFlags: 0
@@ -3026,10 +2967,6 @@ NavMeshObstacle:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-<<<<<<< HEAD
-  - {fileID: 2103167883}
-=======
->>>>>>> dcc85ae3d5ababb1a5e31546beabf5bf37cd1272
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
@@ -3051,10 +2988,6 @@ SceneRoots:
   - {fileID: 923327649}
   - {fileID: 1267980700}
   - {fileID: 1467384010}
-<<<<<<< HEAD
-  - {fileID: 919530230}
-=======
   - {fileID: 1776706981}
   - {fileID: 1295310658}
   - {fileID: 1074500648}
->>>>>>> dcc85ae3d5ababb1a5e31546beabf5bf37cd1272
