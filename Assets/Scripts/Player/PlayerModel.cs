@@ -266,7 +266,7 @@ public class PlayerModel : MonoBehaviour
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public float getHealth()
+    public float GetHealth()
     {
        return health;
     }

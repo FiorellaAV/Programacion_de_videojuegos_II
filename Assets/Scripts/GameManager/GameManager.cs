@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        maxHealth = player.getHealth();
+        
     }
 
     void Start()
@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
         // Instanciar el enemigo
         GameObject newPlayer = Instantiate(playerPrefab, position, Quaternion.identity);
         newPlayer.tag = "Player";
+        
+        maxHealth = player.getHealth();
     }
 
     private void FixedUpdate()
