@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     public GameObject victoryPanel;
-    public GameObject gameOverCanvas; // Asignar en Inspector
+    public GameObject gameOverPanel;
     public GameObject playerPrefab;
 
     private bool isGameOver = false;
@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour
         if (victoryPanel != null)
             victoryPanel.SetActive(false);
 
-        if (gameOverCanvas != null)
-            gameOverCanvas.SetActive(false);
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
 
         Vector3 position = new Vector3(0f, 0.5f, 0f);
 
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         GameObject newPlayer = Instantiate(playerPrefab, position, Quaternion.identity);
         newPlayer.tag = "Player";
 
-        player = GameObject.Find("player(Clone)").GetComponent<PlayerModel>();
+        player = GameObject.Find("Player(Clone)").GetComponent<PlayerModel>();
 
         maxHealth = player.GetHealth();
     }
@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
         // Pausar el tiempo (opcional)
         Time.timeScale = 0f;
         // Mostrar canvas
-        gameOverCanvas.SetActive(true);
+        gameOverPanel.SetActive(true);
     }
 
     // Métodos públicos para los botones
