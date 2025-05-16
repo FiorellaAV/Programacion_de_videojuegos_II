@@ -253,7 +253,7 @@ public class PlayerModel : MonoBehaviour
     {
         UnityEngine.Debug.Log("�El jugador ha muerto!");
         // Pod�s agregar animaciones, sonido, pantalla de derrota, etc.
-        StartCoroutine(DieAfterDelay(4f)); // Espera 4 segundos
+        StartCoroutine(DieAfterDelay(2f)); // Espera 2 segundos
     }
 
     private IEnumerator DieAfterDelay(float delay)
