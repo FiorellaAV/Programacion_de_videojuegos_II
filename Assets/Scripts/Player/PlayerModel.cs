@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerModel : MonoBehaviour
 {
@@ -252,13 +253,17 @@ public class PlayerModel : MonoBehaviour
     {
         UnityEngine.Debug.Log("�El jugador ha muerto!");
         // Pod�s agregar animaciones, sonido, pantalla de derrota, etc.
-        StartCoroutine(DieAfterDelay(2000f)); // Espera 2 segundos
+        StartCoroutine(DieAfterDelay(2f)); // Espera 2 segundos
     }
 
     private IEnumerator DieAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         //Destroy(gameObject);
+        // Llama a GameOver
+        GameManager.Instance.GameOver();
+        // Reinicio la escena?
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public float getHealth()

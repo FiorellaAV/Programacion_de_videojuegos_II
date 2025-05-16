@@ -36,8 +36,22 @@ public class EnemyController : MonoBehaviour
     {
         if (player != null)
         {
+            if (player == null)
+            {
+                UnityEngine.Debug.Log("no hay player");
+            }
             agent = GetComponent<NavMeshAgent>();
-            agent.SetDestination(player.position);
+
+            // Se agrego validacion de navmesh
+            if (agent.isOnNavMesh)
+            {
+                agent.SetDestination(player.position);
+            }
+            else
+            {
+                UnityEngine.Debug.LogWarning("El agente no está sobre un NavMesh.");
+            }
+            // agent.SetDestination(player.position);
             // Calcula direcci�n hacia el player
             /*Vector3 direction = (player.position - transform.position).normalized;
 
