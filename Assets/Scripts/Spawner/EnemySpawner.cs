@@ -13,8 +13,25 @@ public class EnemySpawner : MonoBehaviour
     public int enemiesPerWave = 4;
     private bool isSpawning = true;
 
-    void Start()
+    IEnumerator Start()
     {
+        // Esperar 1 frame para asegurarte de que el Player se haya creado
+        yield return null;
+
+        // Buscar al Player si aún no está asignado
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                player = playerObj.transform;
+            }
+            else
+            {
+                UnityEngine.Debug.LogWarning("No se encontró un objeto con la etiqueta 'Player'.");
+            }
+        }
+
         StartCoroutine(SpawnWaveLoop());
     }
 

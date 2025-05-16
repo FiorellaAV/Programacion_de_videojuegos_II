@@ -260,7 +260,9 @@ public class PlayerModel : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         //Destroy(gameObject);
+        // Llama a GameOver
+        GameManager.Instance.GameOver();
         // Reinicio la escena?
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

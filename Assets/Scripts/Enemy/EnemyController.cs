@@ -41,6 +41,7 @@ public class EnemyController : MonoBehaviour
                 UnityEngine.Debug.Log("no hay player");
             }
             agent = GetComponent<NavMeshAgent>();
+
             // Se agrego validacion de navmesh
             if (agent.isOnNavMesh)
             {
