@@ -11,33 +11,42 @@ public class PlayerModel : MonoBehaviour
     public float health = 200f;
     private float initialHealth = 200f;
 
-    private bool isDashing = false;
-    private float lastDashTime = -Mathf.Infinity;
+    private EnemySpawner spawner;
+    private ObjectPool pool;
+
+    public bool isDashing = false;
 
     void Awake()
     {
         playerView = GetComponent<PlayerView>();
     }
 
-    public void MovePlayer(float moveSpeed, Rigidbody rb)
+    private void Start()
     {
-        //Para que el jugador deje de moverse si el juego terminó
-        if (GameManager.Instance != null && GameManager.Instance.gameEnded)
-            return;
-
-        // Obtener entrada del jugador
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
-
-        // Crear vector de movimiento
-        Vector3 movement = new Vector3(moveX, 0f, moveZ).normalized;
-
-        // Mover al jugador
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-
-        // Actualizar animaciones
-        playerView.AimToMouse(moveX, moveZ);
+        spawner = EnemySpawner.Instance;
+        pool = spawner.GetComponent<ObjectPool>();
+        if (pool != null) Debug.Log("Habemus Pool en PlayerModel");
     }
+
+    //public void MovePlayer(float moveSpeed, Rigidbody rb)
+    //{
+    //    //Para que el jugador deje de moverse si el juego terminó
+    //    if (GameManager.Instance != null && GameManager.Instance.gameEnded)
+    //        return;
+
+    //    // Obtener entrada del jugador
+    //    float moveX = Input.GetAxis("Horizontal");
+    //    float moveZ = Input.GetAxis("Vertical");
+
+    //    // Crear vector de movimiento
+    //    Vector3 movement = new Vector3(moveX, 0f, moveZ).normalized;
+
+    //    // Mover al jugador
+    //    rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+
+    //    // Actualizar animaciones
+    //    playerView.AimToMouse(moveX, moveZ);
+    //}
 
     public bool IsGrounded(Transform groundCheck, float groundCheckRadius, LayerMask groundLayer)
     {
@@ -66,54 +75,53 @@ public class PlayerModel : MonoBehaviour
         }
     }
 
-    public void HandleShooting(float distance, LineRenderer lineRenderer)
-    {
-        //Para que el jugador deje de disparar si el juego terminó
-        if (GameManager.Instance != null && GameManager.Instance.gameEnded)
-            return;
+    //public void HandleShooting(float distance, LineRenderer lineRenderer)
+    //{
+    //    //Para que el jugador deje de disparar si el juego terminó
+    //    if (GameManager.Instance != null && GameManager.Instance.gameEnded)
+    //        return;
 
-        if (Input.GetMouseButtonDown(0)) // Click izquierdo
-        {
-            Vector3 origin = transform.position + Vector3.up * 0.5f; // opcional: levantarlo un poco si querés (tener en cuenta la altura del barril)
-            Vector3 direction = transform.forward;
+    //    if (Input.GetMouseButtonDown(0)) // Click izquierdo
+    //    {
+    //        Vector3 origin = transform.position + Vector3.up * 0.5f; // opcional: levantarlo un poco si querés (tener en cuenta la altura del barril)
+    //        Vector3 direction = transform.forward;
 
-            if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
-            {
-                UnityEngine.Debug.Log("Disparaste a: " + hit.collider.name);
-                DrawShotLine(origin, hit.point, lineRenderer);
+    //        if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
+    //        {
+    //            UnityEngine.Debug.Log("Disparaste a: " + hit.collider.name);
+    //            DrawShotLine(origin, hit.point, lineRenderer);
 
-                // Agregar efectos visuales o daño
-                if (hit.collider.CompareTag("Enemy"))
-                {
-                    GameObject bloodVFX = GameObject.Instantiate(Resources.Load<GameObject>("Simple FX Kit/Prefabs/Blood Splash"), hit.collider.transform.position, Quaternion.identity);
-                    GameObject.Destroy(bloodVFX, 1f); // Destruir efecto tras 1s
+    //            // Agregar efectos visuales o daño
+    //            if (hit.collider.CompareTag("Enemy"))
+    //            {
+    //                GameObject bloodVFX = GameObject.Instantiate(Resources.Load<GameObject>("Simple FX Kit/Prefabs/Blood Splash"), hit.collider.transform.position, Quaternion.identity);
+    //                GameObject.Destroy(bloodVFX, 1f); // Destruir efecto tras 1s
 
-                    if (GameManager.Instance != null)
-                    {
-                        GameManager.Instance.EnemyKilled();
-                    }
-                    hit.collider.gameObject.GetComponent<EnemyModel>().TakeDamage();
-                }
+    //                if (GameManager.Instance != null)
+    //                {
+    //                    GameManager.Instance.EnemyKilled();
+    //                }
+    //                hit.collider.gameObject.GetComponent<EnemyModel>().TakeDamage();
+    //            }
 
-                if (hit.collider.CompareTag("Barrel"))
-                {
-                    Vector3 explosionPos = hit.collider.transform.position;
-                    Destroy(hit.collider.gameObject);
+    //            if (hit.collider.CompareTag("Barrel"))
+    //            {
+    //                Vector3 explosionPos = hit.collider.transform.position; 
+    //                Destroy(hit.collider.gameObject);
+    //                float explosionRadius = 5f; // ajustá según tu necesidad
+    //                float explosionDamage = 200f;
 
-                    float explosionRadius = 5f; // ajustá según tu necesidad
-                    float explosionDamage = 200f;
+    //                Explode(explosionPos, explosionRadius, explosionDamage);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            UnityEngine.Debug.Log("No se golpeó nada.");
+    //        }
+    //    }
+    //}
 
-                    Explode(explosionPos, explosionRadius, explosionDamage);
-                }
-            }
-            else
-            {
-                UnityEngine.Debug.Log("No se golpeó nada.");
-            }
-        }
-    }
-
-    private void Explode(Vector3 position, float radius, float damage)
+    public void Explode(Vector3 position, float radius, float damage)
     {
         // Efecto visual (opcional)
         GameObject explosionVFX = GameObject.Instantiate(Resources.Load<GameObject>("Simple FX Kit/Prefabs/Explosion Fire"), position, Quaternion.identity);
@@ -134,7 +142,8 @@ public class PlayerModel : MonoBehaviour
                 {
                     GameManager.Instance.EnemyKilled();
                 }
-                GameObject.Destroy(nearby.gameObject); // Temporal: destruir directamente
+                // GameObject.Destroy(nearby.gameObject); // Temporal: destruir directamente
+                pool.ReturnObject(nearby.gameObject);
             }
             if (nearby.CompareTag("Player"))
             {
@@ -145,23 +154,23 @@ public class PlayerModel : MonoBehaviour
         }
     }
 
-    // Dash
-    public void HandleDash(MonoBehaviour caller, Rigidbody rb, float dashDistance, float dashDuration, float dashCooldown)
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            // Ejecutar dash si no está en cooldown
-            if (Time.time < lastDashTime + dashCooldown || isDashing)
-                return;
+    //// Dash
+    //public void HandleDash(MonoBehaviour caller, Rigidbody rb, float dashDistance, float dashDuration, float dashCooldown)
+    //{
+    //    if (Input.GetMouseButtonDown(1))
+    //    {
+    //        // Ejecutar dash si no está en cooldown
+    //        if (Time.time < lastDashTime + dashCooldown || isDashing)
+    //            return;
 
-            lastDashTime = Time.time;
-            isDashing = true;
+    //        lastDashTime = Time.time;
+    //        isDashing = true;
 
-            caller.StartCoroutine(Dash(rb, dashDistance, dashDuration));
-        }
-    }
+    //        caller.StartCoroutine(Dash(rb, dashDistance, dashDuration));
+    //    }
+    //}
 
-    private IEnumerator Dash(Rigidbody rb, float dashDistance, float dashDuration)
+    public IEnumerator Dash(Rigidbody rb, float dashDistance, float dashDuration)
     {
         Vector3 dashDirection = transform.forward;
         float maxDashDistance = dashDistance;
@@ -194,7 +203,7 @@ public class PlayerModel : MonoBehaviour
         UnityEngine.Debug.DrawRay(origin, direction * distance, Color.green);
     }
 
-    private void DrawShotLine(Vector3 start, Vector3 end, LineRenderer lineRenderer)
+    public void DrawShotLine(Vector3 start, Vector3 end, LineRenderer lineRenderer)
     {
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, start);
@@ -212,7 +221,7 @@ public class PlayerModel : MonoBehaviour
     public void TakeDamage(float amount)
     {
         health -= amount;
-        UnityEngine.Debug.Log("Player recibió daño. Salud restante: " + health);
+        // UnityEngine.Debug.Log("Player recibió daño. Salud restante: " + health);
         if (health <= 0)
         {
             playerView.Die();

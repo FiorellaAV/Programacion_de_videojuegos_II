@@ -9,15 +9,19 @@ public class EnemyModel : MonoBehaviour
     public float health = 100f;
 
     public GameObject healthKit;
+    private EnemySpawner spawner;
+    private ObjectPool pool;
 
     void Awake()
     {
-
+        
     }
 
     void Start()
     {
-        
+        spawner = EnemySpawner.Instance;
+        pool = spawner.GetComponent<ObjectPool>();
+        if (pool != null) Debug.Log("Habemus Pool en EnemyModel");
     }
 
     void Update()
@@ -36,7 +40,9 @@ public class EnemyModel : MonoBehaviour
         if (health <= 0)
         {
             generatePowerUp();
-            Destroy(this.gameObject);
+            // Cambiar por Recicle
+            pool.ReturnObject(this.gameObject);
+            // Destroy(this.gameObject);
         }
     }
 

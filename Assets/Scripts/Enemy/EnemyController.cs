@@ -20,7 +20,6 @@ public class EnemyController : MonoBehaviour
 
     }
 
-
     void Update()
     {
         if (!isWaiting)
@@ -77,7 +76,7 @@ public class EnemyController : MonoBehaviour
 
             if (distanceToPlayer <= reachDistance)
             {
-                UnityEngine.Debug.Log("El enemigo alcanzó al jugador.");
+                // UnityEngine.Debug.Log("El enemigo alcanzó al jugador.");
                 PlayerModel playerModel = player.GetComponent<PlayerModel>();
                 if (playerModel == null)
                 {
@@ -91,7 +90,7 @@ public class EnemyController : MonoBehaviour
                 if (playerModel != null)
                 {
                     playerModel.TakeDamage(damage);
-                    UnityEngine.Debug.Log("Jugador alcanzado y dañado");
+                    // UnityEngine.Debug.Log("Jugador alcanzado y dañado");
                 }
                 else
                 {
