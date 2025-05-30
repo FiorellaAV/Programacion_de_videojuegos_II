@@ -383,6 +383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 376540031}
   - component: {fileID: 376540030}
+  - component: {fileID: 376540032}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -402,16 +403,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181bb6d9f482e984abd64c7b668ab901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 6570306646744021988, guid: 016dd1dbba8105c4681d9bfe9ed72899,
-    type: 3}
   spawnPoints:
   - {fileID: 1132187017}
   - {fileID: 1639310767}
   - {fileID: 923327649}
   - {fileID: 1267980700}
-  player: {fileID: 0}
   spawnInterval: 5
-  enemiesPerWave: 5
+  enemiesPerWave: 4
 --- !u!4 &376540031
 Transform:
   m_ObjectHideFlags: 0
@@ -420,13 +418,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376540029}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.27704215, y: -0.18925661, z: 0.05575622, w: 0.9403833}
+  m_LocalPosition: {x: 5.5328765, y: 9.228262, z: -13.189198}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &376540032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376540029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0999b5e4d18f16446aafeaf6e15f4802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6570306646744021988, guid: 016dd1dbba8105c4681d9bfe9ed72899, type: 3}
+  initialSize: 4
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
