@@ -560,6 +560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 200
+  isDashing: 0
 --- !u!114 &5112021100716404355
 MonoBehaviour:
   m_ObjectHideFlags: 0

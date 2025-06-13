@@ -1,19 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    private EnemyView ev;
     NavMeshAgent agent;
     public Transform player;      // Asignar desde el Inspector
     public float moveSpeed = 3f;  // Velocidad de movimiento
     public float damage = 10f;
     public float reachDistance = 2f; // Distancia para considerar que "alcanzó" al jugador
 
-    private bool isWaiting = false;
+    private bool isWaiting;
     //Metodo para pasarle el player a enemy y pueda seguirlo con move
+
+    //  Inicialización de referencias internas
+    void Awake()
+    {
+        ev = GetComponent<EnemyView>();
+        isWaiting = false;
+
+    }
+
     public void Initialize(Transform playerTarget)
     {
         player = playerTarget;
@@ -75,6 +86,7 @@ public class EnemyController : MonoBehaviour
             //UnityEngine.Debug.Log($"Distancia al jugador: {distanceToPlayer}");
 
             if (distanceToPlayer <= reachDistance)
+
             {
                 // UnityEngine.Debug.Log("El enemigo alcanzó al jugador.");
                 PlayerModel playerModel = player.GetComponent<PlayerModel>();
@@ -89,6 +101,7 @@ public class EnemyController : MonoBehaviour
 
                 if (playerModel != null)
                 {
+                    ev.Attack();
                     playerModel.TakeDamage(damage);
                     // UnityEngine.Debug.Log("Jugador alcanzado y dañado");
                 }
@@ -97,7 +110,7 @@ public class EnemyController : MonoBehaviour
                     UnityEngine.Debug.LogWarning($"No se encontró PlayerModel en el objeto {player.name} ni en sus hijos/padres.");
                 }
 
-                StartCoroutine(WaitAfterHit());
+                StartCoroutine(WaitAfterHit(2f));
             }
         }
         else
@@ -106,10 +119,11 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitAfterHit()
+    private IEnumerator WaitAfterHit(float delay)
     {
         isWaiting = true;
-        yield return new WaitForSeconds(2f);
+        ev.WaitAttack();
+        yield return new WaitForSeconds(delay);
         isWaiting = false;
     }
 }

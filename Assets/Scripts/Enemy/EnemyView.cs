@@ -4,20 +4,75 @@ using UnityEngine;
 
 public class EnemyView : MonoBehaviour
 {
-    private EnemyController controller;
+    private Animator animator;
 
-    public void SetController(EnemyController enemyController)
+
+    public void Awake()
     {
-        controller = enemyController;
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
     }
 
-    private void FixedUpdate()
+    public void Start()
     {
-        controller?.Move();
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+        animator.SetBool("is_alive", true); // Desactiva animación de muerte al iniciar
+        animator.SetBool("is_attacking", false); // Desactiva animación de ataque al iniciar
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+
+    public void Attack()
     {
-        
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+        animator.SetBool("is_attacking", true); // Activar la animación de ataque
+        animator.SetBool("attack_in_cooldown", false);
     }
+
+
+
+    public void WaitAttack()
+    {
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+        animator.SetBool("attack_in_cooldown", true);
+    }
+
+    public void Walk()
+    {
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+        animator.SetBool("is_attacking", false); // Activar la animación de caminata
+        animator.SetBool("attack_in_cooldown", false);
+    }
+
+
+    public void Die()
+    {
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+        animator.SetBool("is_alive", false);
+    }
+
+
+
+
+
+
+
+    
 }

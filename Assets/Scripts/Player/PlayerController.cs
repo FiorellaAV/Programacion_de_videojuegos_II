@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     private PlayerView pv;
     private LineRenderer lr;
     private Camera mainCamera;
-    private PlayerView playerView;
 
     public LayerMask groundLayer;
     public Transform groundCheck;
@@ -30,7 +29,6 @@ public class PlayerController : MonoBehaviour
     //  Inicialización de referencias internas
     void Awake()
     {
-        playerView = GetComponent<PlayerView>();
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerModel>();
         pv = GetComponent<PlayerView>();
@@ -107,7 +105,7 @@ public class PlayerController : MonoBehaviour
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
 
         // Actualizar animaciones
-        playerView.AimToMouse(moveX, moveZ);
+        pv.AimToMouse(moveX, moveZ);
     }
 
     public void HandleShooting(float distance, LineRenderer lineRenderer)

@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerModel : MonoBehaviour
 {
     private PlayerView playerView;
-    private Animator animator;
 
     public float health = 200f;
     private float initialHealth = 200f;
@@ -25,7 +25,7 @@ public class PlayerModel : MonoBehaviour
     {
         spawner = EnemySpawner.Instance;
         pool = spawner.GetComponent<ObjectPool>();
-        if (pool != null) Debug.Log("Habemus Pool en PlayerModel");
+        if (pool != null) UnityEngine.Debug.Log("Habemus Pool en PlayerModel");
     }
 
     //public void MovePlayer(float moveSpeed, Rigidbody rb)
@@ -135,15 +135,20 @@ public class PlayerModel : MonoBehaviour
         {
             if (nearby.CompareTag("Enemy"))
             {
-                // Acá podrías aplicar daño si tenés una clase Enemy con TakeDamage
-                // Ejemplo:
-                // nearby.GetComponent<Enemy>().TakeDamage(damage);
-                if (GameManager.Instance != null)
+                EnemyModel enemyModel = nearby.GetComponent<EnemyModel>();
+                if (enemyModel != null)
                 {
-                    GameManager.Instance.EnemyKilled();
+                    enemyModel.TakeDamage(); // Llama al método correctamente
+
+                    if (GameManager.Instance != null)
+                    {
+                        GameManager.Instance.EnemyKilled();
+                    }
                 }
-                // GameObject.Destroy(nearby.gameObject); // Temporal: destruir directamente
-                pool.ReturnObject(nearby.gameObject);
+                else
+                {
+                    UnityEngine.Debug.LogWarning("El enemigo no tiene componente EnemyModel.");
+                }
             }
             if (nearby.CompareTag("Player"))
             {

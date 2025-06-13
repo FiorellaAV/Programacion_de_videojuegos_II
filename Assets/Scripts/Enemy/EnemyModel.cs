@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,22 +13,24 @@ public class EnemyModel : MonoBehaviour
     public GameObject healthKit;
     private EnemySpawner spawner;
     private ObjectPool pool;
+    private EnemyView ev;
 
     void Awake()
     {
-        
+        ev = GetComponent<EnemyView>();
+
     }
 
     void Start()
     {
         spawner = EnemySpawner.Instance;
         pool = spawner.GetComponent<ObjectPool>();
-        if (pool != null) Debug.Log("Habemus Pool en EnemyModel");
+        if (pool != null) UnityEngine.Debug.Log("Habemus Pool en EnemyModel");
     }
 
     void Update()
     {
-        
+
     }
 
     public void TakeDamage()
@@ -39,17 +43,70 @@ public class EnemyModel : MonoBehaviour
     {
         if (health <= 0)
         {
+            ev.Die(); // Lanza animación de muerte
             generatePowerUp();
-            // Cambiar por Recicle
-            pool.ReturnObject(this.gameObject);
-            // Destroy(this.gameObject);
+
+            // Desactivar lógica y colisiones para que no afecte el juego
+            DisableEnemy();
+
+            // Esperar a que termine la animación antes de devolver al pool
+            StartCoroutine(DieAfterDelay(2f));
         }
     }
+
+
+    private IEnumerator DieAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Reactivar componentes para el próximo uso
+        EnableEnemy();
+
+        pool.ReturnObject(this.gameObject);
+    }
+
+
+    private void DisableEnemy()
+    {
+        // Evitar que siga interactuando con el mundo
+        //Collider col = GetComponent<Collider>();
+        //if (col != null) col.enabled = false;
+
+        EnemyController ec = GetComponent<EnemyController>();
+        if (ec != null) ec.enabled = false;
+        ec.moveSpeed = 3f;
+
+        UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (agent != null) agent.ResetPath();
+        //if (agent != null) agent.enabled = false;
+
+
+        // También podés apagar otros componentes si hiciera falta
+        // Rigidbody rb = GetComponent<Rigidbody>();
+        // if (rb != null) rb.isKinematic = true;
+    }
+
+    private void EnableEnemy()
+    {
+        //Collider col = GetComponent<Collider>();
+        //if (col != null) col.enabled = true;
+
+        EnemyController ec = GetComponent<EnemyController>();
+        if (ec != null) ec.enabled = true;
+
+        UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (agent != null) agent.enabled = true;
+
+        // Reiniciar vida u otros valores si hace falta
+        health = 100f;
+    }
+
+
 
     private void generatePowerUp()
     {
         //Cambiar luego lógica del código para otros power ups.
-        float chance = Random.Range(1, 61);
+        float chance = UnityEngine.Random.Range(1, 61);
         if (chance <= 3)
         {
             GameObject.Instantiate(healthKit, transform.position, transform.rotation);

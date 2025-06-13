@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 308696967197913783}
   - component: {fileID: 8815653009375455829}
   - component: {fileID: 2870519709765434352}
-  - component: {fileID: 7217027419769305377}
   - component: {fileID: 9171910491440370461}
-  - component: {fileID: -907314077115095435}
   - component: {fileID: -9077853922002627394}
+  - component: {fileID: 7217027419769305377}
+  - component: {fileID: -907314077115095435}
   - component: {fileID: 4015875417780501572}
   m_Layer: 0
   m_Name: Enemy
@@ -112,18 +112,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7217027419769305377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6570306646744021988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97baf6c5f4ca17748827a81055cf5a30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &9171910491440370461
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -151,22 +139,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-907314077115095435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6570306646744021988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55741e7f49e5cf441a07ee854c9d0afd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 5080792807238946737, guid: a3759cd2191ce5341ab514ce04bd216a, type: 3}
-  moveSpeed: 3
-  damage: 10
-  reachDistance: 2
 --- !u!195 &-9077853922002627394
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -189,6 +161,34 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7217027419769305377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6570306646744021988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97baf6c5f4ca17748827a81055cf5a30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-907314077115095435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6570306646744021988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55741e7f49e5cf441a07ee854c9d0afd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 5080792807238946737, guid: a3759cd2191ce5341ab514ce04bd216a, type: 3}
+  moveSpeed: 3
+  damage: 10
+  reachDistance: 2
 --- !u!114 &4015875417780501572
 MonoBehaviour:
   m_ObjectHideFlags: 0

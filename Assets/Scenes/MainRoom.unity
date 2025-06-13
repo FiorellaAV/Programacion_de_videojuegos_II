@@ -505,7 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0999b5e4d18f16446aafeaf6e15f4802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6570306646744021988, guid: 016dd1dbba8105c4681d9bfe9ed72899, type: 3}
+  prefab: {fileID: 4503948766496688305, guid: b06cee2df35c0e945bfe2a139257266c, type: 3}
   initialSize: 4
 --- !u!4 &406143712 stripped
 Transform:
