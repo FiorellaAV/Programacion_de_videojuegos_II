@@ -477,7 +477,8 @@ MonoBehaviour:
   - {fileID: 923327649}
   - {fileID: 1267980700}
   spawnInterval: 5
-  enemiesPerWave: 4
+  catfishPerWave: 4
+  lizardsPerWave: 1
 --- !u!4 &376540031
 Transform:
   m_ObjectHideFlags: 0
@@ -507,6 +508,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4503948766496688305, guid: b06cee2df35c0e945bfe2a139257266c, type: 3}
   initialSize: 4
+  prefab2: {fileID: 6697294229898335401, guid: 7dc7b54399d54194e9f2619f1832e8d5, type: 3}
+  initialSize2: 1
 --- !u!4 &406143712 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4706116037937865665, guid: 52c7d057cba585641bb68312c10d7791,

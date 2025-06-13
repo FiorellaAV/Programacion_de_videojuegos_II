@@ -134,7 +134,8 @@ public class PlayerController : MonoBehaviour
                     {
                         GameManager.Instance.EnemyKilled();
                     }
-                    hit.collider.gameObject.GetComponent<EnemyModel>().TakeDamage();
+                    if (hit.collider.gameObject.GetComponent<EnemyModel>() != null) hit.collider.gameObject.GetComponent<EnemyModel>().TakeDamage();
+                    if (hit.collider.gameObject.GetComponent<EnemyLizardModel>() != null) hit.collider.gameObject.GetComponent<EnemyLizardModel>().TakeDamage();
                 }
 
                 if (hit.collider.CompareTag("Barrel"))

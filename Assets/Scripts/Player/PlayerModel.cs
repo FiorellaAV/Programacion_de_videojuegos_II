@@ -147,7 +147,21 @@ public class PlayerModel : MonoBehaviour
                 }
                 else
                 {
-                    UnityEngine.Debug.LogWarning("El enemigo no tiene componente EnemyModel.");
+
+                    EnemyLizardModel enemyLizardModel = nearby.GetComponent<EnemyLizardModel>();
+                    if (enemyLizardModel != null)
+                    {
+                        enemyLizardModel.TakeDamage(); // Llama al método correctamente
+
+                        if (GameManager.Instance != null)
+                        {
+                            GameManager.Instance.EnemyKilled();
+                        }
+                    }
+                    else
+                    {
+                        UnityEngine.Debug.LogWarning("El enemigo no tiene componente EnemyModel.");
+                    }
                 }
             }
             if (nearby.CompareTag("Player"))

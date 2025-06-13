@@ -12,6 +12,13 @@ public class ObjectPool : MonoBehaviour
     [Header("Cantidad inicial")]
     public int initialSize = 10;
 
+
+    [Header("Prefab a instanciar")]
+    public GameObject prefab2;
+
+    [Header("Cantidad inicial")]
+    public int initialSize2 = 10;
+
     private Queue<GameObject> pool = new Queue<GameObject>();
 
     void Start()
@@ -20,6 +27,14 @@ public class ObjectPool : MonoBehaviour
         for (int i = 0; i < initialSize; i++)
         {
             GameObject obj = Instantiate(prefab);
+            obj.SetActive(false);
+            pool.Enqueue(obj);
+            // Debug.Log("Create object: " + i);
+        }
+        // Pre-instanciar objetos inactivos
+        for (int i = 0; i < initialSize2; i++)
+        {
+            GameObject obj = Instantiate(prefab2);
             obj.SetActive(false);
             pool.Enqueue(obj);
             // Debug.Log("Create object: " + i);
