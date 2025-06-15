@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public int enemiesKilled = 0;
     public int victoryCount = 50;
     public TextMeshProUGUI killCounterText;
-    public PlayerModel player;
+    public PlayerPresenter playerPresenter;
     public Image healthBar;
 
     float maxHealth;
@@ -33,12 +33,12 @@ public class GameManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        
+
     }
 
     void Start()
     {
-        
+
         UpdateCounterText();
 
         if (victoryPanel != null)
@@ -53,9 +53,16 @@ public class GameManager : MonoBehaviour
         GameObject newPlayer = Instantiate(playerPrefab, position, Quaternion.identity);
         newPlayer.tag = "Player";
 
-        player = GameObject.Find("Player(Clone)").GetComponent<PlayerModel>();
+        // player = GameObject.Find("Player(Clone)").GetComponent<PlayerModel>();
+        playerPresenter = newPlayer.GetComponent<PlayerPresenter>();
 
-        maxHealth = player.GetHealth();
+        if (playerPresenter == null)
+        {
+            Debug.LogError("No se encontró PlayerPresenter en el jugador instanciado!");
+            return;
+        }
+
+        maxHealth = playerPresenter.GetModel().GetHealth();
     }
 
     private void FixedUpdate()
@@ -76,7 +83,7 @@ public class GameManager : MonoBehaviour
 
     void HealthBarFiller()
     {
-        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, player.GetHealth() / maxHealth, lerpSpeed);
+        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, playerPresenter.GetModel().GetHealth() / maxHealth, lerpSpeed);
     }
 
     public void EnemyKilled()
@@ -98,7 +105,7 @@ public class GameManager : MonoBehaviour
 
     void healthBarColorChanger()
     {
-        Color healthColor = Color.Lerp(Color.red, Color.green, (player.GetHealth() / maxHealth));
+        Color healthColor = Color.Lerp(Color.red, Color.green, playerPresenter.GetModel().GetHealth() / maxHealth);
 
         healthBar.color = healthColor;
     }

@@ -2,93 +2,103 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerView : MonoBehaviour
 {
-
     private Animator animator;
+    public LineRenderer lineRenderer;
+    public Transform groundCheck;
 
-    public void Awake()
+    public float groundCheckRadius = 0.3f;
+    public LayerMask groundLayer;
+
+    void Awake()
     {
-        if (animator == null)
+        animator = GetComponent<Animator>();
+        lineRenderer = GetComponent<LineRenderer>();
+    }
+
+    public void Initialize()
+    {
+        animator.SetBool("is_alive", true);
+    }
+    void Start()
+    {
+        lineRenderer.enabled = false;
+    }
+
+    public bool IsGrounded()
+    {
+        return Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
+    }
+
+    public void Move(Vector3 movement, float speed)
+    {
+        GetComponent<Rigidbody>().MovePosition(transform.position + movement * speed * Time.fixedDeltaTime);
+    }
+
+    public void RotateTowards(Vector3 direction)
+    {
+        if (direction != Vector3.zero)
         {
-            animator = GetComponent<Animator>();
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            GetComponent<Rigidbody>().MoveRotation(rotation);
         }
     }
 
-    public void Start()
+    public void DrawShotLine(Vector3 origin, Vector3 target, float duration = 0.05f)
     {
-        animator.SetBool("is_alive", true); // Desactiva animación de muerte al iniciar
+        lineRenderer.enabled = true;
+        lineRenderer.SetPosition(0, origin);
+        lineRenderer.SetPosition(1, target);
+        StartCoroutine(DisableLineAfterDelay(duration));
+    }
+    private IEnumerator DisableLineAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        lineRenderer.enabled = false;
     }
 
+    public void ShowBloodEffect(Vector3 position)
+    {
+        GameObject vfx = GameObject.Instantiate(Resources.Load<GameObject>("Simple FX Kit/Prefabs/Blood Splash"), position, Quaternion.identity);
+        GameObject.Destroy(vfx, 1f);
+    }
 
     public void Jump()
     {
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-        }
-        animator.SetBool("is_jumping", true); // Activar la animación de salto
+        animator.SetBool("is_jumping", true);
     }
-
-
-    public void Dash()
-    {
-        // No hay animación de Dash
-    }
-
 
     public void VerifyJump()
     {
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-        }
-        // Verificar si la animación de salto ha terminado
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") &&
             animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
-            animator.SetBool("is_jumping", false); // Desactivar la animación de salto
+            animator.SetBool("is_jumping", false);
         }
-        
     }
-
 
     public void AimToMouse(float moveX, float moveZ)
     {
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-        }
-
-        // Crear el vector de movimiento en el espacio global
         Vector3 globalMovement = new Vector3(moveX, 0f, moveZ);
-
-        // Transformar el vector de movimiento al espacio local del personaje
         Vector3 localMovement = transform.InverseTransformDirection(globalMovement);
 
-        // Si hay movimiento, actualizar aim_x y aim_y en el espacio local
-        if (localMovement != Vector3.zero)
-        {
-            animator.SetFloat("aim_x", localMovement.x);
-            animator.SetFloat("aim_y", localMovement.z);
-        }
-        else
-        {
-            // Si no hay movimiento, establecer ambos en 0
-            animator.SetFloat("aim_x", 0f);
-            animator.SetFloat("aim_y", 0f);
-        }
+        animator.SetFloat("aim_x", localMovement.x);
+        animator.SetFloat("aim_y", localMovement.z);
+    }
+
+    public void PlayExplosionEffect(Vector3 position)
+    {
+        GameObject explosionVFX = GameObject.Instantiate(Resources.Load<GameObject>("Simple FX Kit/Prefabs/Explosion Fire"), position, Quaternion.identity);
+        GameObject.Destroy(explosionVFX, 2f);
     }
 
     public void Die()
     {
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-        }
         animator.SetBool("is_alive", false);
     }
-
-
 }
+
+
+

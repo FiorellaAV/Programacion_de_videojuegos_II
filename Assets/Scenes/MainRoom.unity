@@ -3209,7 +3209,7 @@ MonoBehaviour:
   enemiesKilled: 0
   victoryCount: 50
   killCounterText: {fileID: 919530231}
-  player: {fileID: 0}
+  playerPresenter: {fileID: 0}
   healthBar: {fileID: 1725211628}
 --- !u!4 &1776706981
 Transform:
