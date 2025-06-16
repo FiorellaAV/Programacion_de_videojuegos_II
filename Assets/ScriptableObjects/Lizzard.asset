@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52bad9136e178de49a98b76a15d76b18, type: 3}
   m_Name: Lizzard
   m_EditorClassIdentifier: 
-  _enemyName: 
-  _description: 
-  _cost: 0
-  _damage: 0
+  _enemyName: Lizzard
+  _description: Strong Enemy
+  _cost: 1
+  _damage: 20
+  _attackDelay: 2
+  _moveSpeed: 3
