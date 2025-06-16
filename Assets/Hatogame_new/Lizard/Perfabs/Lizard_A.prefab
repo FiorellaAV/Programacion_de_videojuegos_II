@@ -68,6 +68,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lizard_A
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2fcb218bae311564bb0644962a1b1d0d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -91,15 +96,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2fcb218bae311564bb0644962a1b1d0d,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: -3565321934955265523}
+      addedObject: {fileID: -6195936966888389580}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2fcb218bae311564bb0644962a1b1d0d,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: -1419448445240674761}
+      addedObject: {fileID: -2589735644651847080}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2fcb218bae311564bb0644962a1b1d0d,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5964343509076254287}
+      addedObject: {fileID: 8867254059901820736}
   m_SourcePrefab: {fileID: 100100000, guid: 2fcb218bae311564bb0644962a1b1d0d, type: 3}
 --- !u!1 &6697294229898335401 stripped
 GameObject:
@@ -170,7 +175,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -200,7 +205,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &-3565321934955265523
+--- !u!114 &-6195936966888389580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,14 +214,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 6697294229898335401}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66341828dd2734b409cd1f9f45960fa9, type: 3}
+  m_Script: {fileID: 11500000, guid: 55741e7f49e5cf441a07ee854c9d0afd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  damage: 10
+  reachDistance: 2
+  enemyData: {fileID: 11400000, guid: 95a40d12e64cd4147be5ba44317c488f, type: 2}
+--- !u!114 &-2589735644651847080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6697294229898335401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72854c563b515d3418c19a6b7dd090c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
   health: 100
   healthKit: {fileID: 7244136257834945831, guid: b7a7b89af7cc2d240a3b50e3bfc52c36,
     type: 3}
---- !u!114 &-1419448445240674761
+--- !u!114 &8867254059901820736
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,22 +246,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6697294229898335401}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22270d1d5079aef4ba9df9ffd62d945d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  moveSpeed: 3
-  damage: 10
-  reachDistance: 2
---- !u!114 &5964343509076254287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6697294229898335401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c7cf31dca7481e47bba943d0f1b47c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 97baf6c5f4ca17748827a81055cf5a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

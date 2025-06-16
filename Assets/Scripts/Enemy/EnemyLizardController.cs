@@ -9,10 +9,11 @@ public class EnemyLizardController : MonoBehaviour
 {
     private EnemyLizardView ev;
     NavMeshAgent agent;
-    public Transform player;      // Asignar desde el Inspector
+    private Transform player;      // Asignar desde el Inspector
     public float moveSpeed = 2f;  // Velocidad de movimiento
     public float damage = 20f;
     public float reachDistance = 2f; // Distancia para considerar que "alcanzó" al jugador
+    
 
     private bool isWaiting;
     //Metodo para pasarle el player a enemy y pueda seguirlo con move
@@ -36,8 +37,7 @@ public class EnemyLizardController : MonoBehaviour
         if (!isWaiting)
         {
             Move();
-
-            PlayerIsReached();
+            // PlayerIsReached();
 
         }
     }
@@ -118,6 +118,26 @@ public class EnemyLizardController : MonoBehaviour
             UnityEngine.Debug.LogWarning("La referencia a player es null.");
         }
     }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        ev.Attack();
+    //        PlayerModel pm = other.GetComponent<PlayerModel>();
+    //        if (pm != null)
+    //        {
+    //            UnityEngine.Debug.Log(" Player founded");
+    //        }
+    //        else 
+    //        { 
+    //            UnityEngine.Debug.Log("not Player founded"); 
+    //        }
+
+    //        pm.TakeDamage(damage);
+    //        StartCoroutine(WaitAfterHit(2f));
+    //    }
+    //}
 
     private IEnumerator WaitAfterHit(float delay)
     {

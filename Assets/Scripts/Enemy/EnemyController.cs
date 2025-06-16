@@ -9,10 +9,9 @@ public class EnemyController : MonoBehaviour
 {
     private EnemyView ev;
     NavMeshAgent agent;
-    public Transform player;      // Asignar desde el Inspector
-    public float moveSpeed = 3f;  // Velocidad de movimiento
-    public float damage = 10f;
-    public float reachDistance = 2f; // Distancia para considerar que "alcanzó" al jugador
+    private Transform player;      // Asignar desde el Inspector
+    // public float moveSpeed = 3f;   // Velocidad de movimiento
+    public EnemyData enemyData;
 
     private bool isWaiting;
     //Metodo para pasarle el player a enemy y pueda seguirlo con move
@@ -22,13 +21,11 @@ public class EnemyController : MonoBehaviour
     {
         ev = GetComponent<EnemyView>();
         isWaiting = false;
-
     }
 
     public void Initialize(Transform playerTarget)
     {
         player = playerTarget;
-
     }
 
     void Update()
@@ -36,9 +33,6 @@ public class EnemyController : MonoBehaviour
         if (!isWaiting)
         {
             Move();
-
-            PlayerIsReached();
-
         }
     }
 
@@ -61,69 +55,14 @@ public class EnemyController : MonoBehaviour
             {
                 UnityEngine.Debug.LogWarning("El agente no está sobre un NavMesh.");
             }
-            // agent.SetDestination(player.position);
-            // Calcula direcci�n hacia el player
-            /*Vector3 direction = (player.position - transform.position).normalized;
-
-            // Mueve al enemigo hacia el player
-            transform.position += direction * moveSpeed * Time.deltaTime;
-
-            // Opcional: rotarlo hacia el player
-            direction.y = 0f;
-            if (direction != Vector3.zero)
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-            }*/
         }
     }
 
-    public void PlayerIsReached()
-    {
-        if (player != null)
-        {
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-            //UnityEngine.Debug.Log($"Distancia al jugador: {distanceToPlayer}");
-
-            if (distanceToPlayer <= reachDistance)
-
-            {
-                // UnityEngine.Debug.Log("El enemigo alcanzó al jugador.");
-                PlayerModel playerModel = player.GetComponent<PlayerModel>();
-                if (playerModel == null)
-                {
-                    playerModel = player.GetComponentInParent<PlayerModel>();
-                }
-                if (playerModel == null)
-                {
-                    playerModel = player.GetComponentInChildren<PlayerModel>();
-                }
-
-                if (playerModel != null)
-                {
-                    ev.Attack();
-                    playerModel.TakeDamage(damage);
-                    // UnityEngine.Debug.Log("Jugador alcanzado y dañado");
-                }
-                else
-                {
-                    UnityEngine.Debug.LogWarning($"No se encontró PlayerModel en el objeto {player.name} ni en sus hijos/padres.");
-                }
-
-                StartCoroutine(WaitAfterHit(2f));
-            }
-        }
-        else
-        {
-            UnityEngine.Debug.LogWarning("La referencia a player es null.");
-        }
-    }
-
-    private IEnumerator WaitAfterHit(float delay)
+    public IEnumerator WaitAfterHit()
     {
         isWaiting = true;
         ev.WaitAttack();
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(enemyData.AttacDelay);
         isWaiting = false;
     }
 }

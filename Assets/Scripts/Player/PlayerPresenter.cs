@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class PlayerPresenter : MonoBehaviour
 {
     private PlayerModel model;
     public PlayerModel GetModel() => model;
     private PlayerView view;
+    private PlayerInput input;
     private Camera mainCamera;
 
     private float lastDashTime = -Mathf.Infinity;
@@ -22,6 +24,7 @@ public class PlayerPresenter : MonoBehaviour
     {
         model = new PlayerModel();
         view = GetComponent<PlayerView>();
+        input = GetComponent<PlayerInput>();
         mainCamera = Camera.main;
     }
 
@@ -32,13 +35,25 @@ public class PlayerPresenter : MonoBehaviour
         view.Initialize();
     }
 
+    private void OnEnable()
+    {
+        input.OnInputShooting += IsShooting;
+        input.OnInputDashing += IsDashing;
+        input.OnInputJumping += IsJumping;
+    }
+    private void OnDisable()
+    {
+        input.OnInputShooting -= IsShooting;
+        input.OnInputDashing -= IsDashing;
+        input.OnInputJumping -= IsJumping;
+
+    }
+
     void Update()
     {
         if (model.health <= 0f || GameManager.Instance?.gameEnded == true)
             return;
 
-        HandleShooting();
-        HandleDash();
         view.VerifyJump();
     }
 
@@ -49,71 +64,17 @@ public class PlayerPresenter : MonoBehaviour
 
         MovePlayer();
         model.RotateTowardsMouse(mainCamera, GetComponent<Rigidbody>());
-
-        if (Input.GetKey(KeyCode.Space) && view.IsGrounded())
-        {
-            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            view.Jump();
-        }
     }
 
     private void MovePlayer()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
-
-        Vector3 movement = new Vector3(moveX, 0f, moveZ).normalized;
+        // Crear vector de movimiento
+        Vector3 movement = input.Axis.normalized;
+        // Mover al jugador
         view.Move(movement, moveSpeed);
-        view.AimToMouse(moveX, moveZ);
+        // Actualizar animaciones
+        view.AimToMouse(input.Axis.x, input.Axis.z);
     }
-
-    private void HandleShooting()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 origin = transform.position + Vector3.up * 0.5f;
-            Vector3 direction = transform.forward;
-
-            if (Physics.Raycast(origin, direction, out RaycastHit hit, rayDistance))
-            {
-                view.DrawShotLine(origin, hit.point);
-
-                if (hit.collider.CompareTag("Enemy"))
-                {
-                    view.ShowBloodEffect(hit.collider.transform.position);
-                    GameManager.Instance?.EnemyKilled();
-
-                    if (hit.collider.TryGetComponent<EnemyModel>(out var enemy)) enemy.TakeDamage();
-                    if (hit.collider.TryGetComponent<EnemyLizardModel>(out var lizard)) lizard.TakeDamage();
-                }
-
-                if (hit.collider.CompareTag("Barrel"))
-                {
-                    Vector3 explosionPos = hit.collider.transform.position;
-                    Destroy(hit.collider.gameObject);
-
-                    float radius = 4f;
-                    float damage = 200f;
-                    Explode(explosionPos, radius, damage);
-
-                }
-            }
-        }
-    }
-
-    private void HandleDash()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (Time.time >= lastDashTime + dashCooldown && !model.isDashing)
-            {
-                lastDashTime = Time.time;
-                model.isDashing = true;
-                StartCoroutine(model.Dash(GetComponent<Rigidbody>(), dashDistance, dashDuration, transform));
-            }
-        }
-    }
-
     private void Explode(Vector3 explosionPos, float explosionRadius, float explosionDamage)
     {
         view.PlayExplosionEffect(explosionPos);
@@ -136,6 +97,17 @@ public class PlayerPresenter : MonoBehaviour
         }
     }
 
+    public void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            EnemyController ec = collision.gameObject.GetComponent<EnemyController>();
+            // TODO. Llamar al Takedamaage pero con el deaño segun enemigo
+            model.TakeDamage(ec.enemyData.Damage);
+            ec.WaitAfterHit();
+        }
+    }
+
     public void ApplyDamageToPlayer(float damage)
     {
         model.TakeDamage(damage);
@@ -150,6 +122,55 @@ public class PlayerPresenter : MonoBehaviour
     public void ApplyHealthKit(float amount)
     {
         model.Heal(amount);
+    }
+
+    public void IsShooting()
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.5f;
+        Vector3 direction = transform.forward;
+
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, rayDistance))
+        {
+            view.DrawShotLine(origin, hit.point);
+
+            if (hit.collider.CompareTag("Enemy"))
+            {
+                view.ShowBloodEffect(hit.collider.transform.position);
+                GameManager.Instance?.EnemyKilled();
+
+                if (hit.collider.TryGetComponent<EnemyModel>(out var enemy)) enemy.TakeDamage();
+                if (hit.collider.TryGetComponent<EnemyLizardModel>(out var lizard)) lizard.TakeDamage();
+            }
+
+            if (hit.collider.CompareTag("Barrel"))
+            {
+                Vector3 explosionPos = hit.collider.transform.position;
+                Destroy(hit.collider.gameObject);
+
+                float radius = 4f;
+                float damage = 200f;
+                Explode(explosionPos, radius, damage);
+            }
+        }
+    }
+
+    public void IsDashing()
+    {
+        if (Time.time >= lastDashTime + dashCooldown && !model.isDashing)
+        {
+            lastDashTime = Time.time;
+            model.isDashing = true;
+            StartCoroutine(model.Dash(GetComponent<Rigidbody>(), dashDistance, dashDuration, transform));
+        }
+    }
+
+    public void IsJumping()
+    {
+        if (view.IsGrounded())
+        {
+            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            view.Jump();
+        }
     }
 
 }

@@ -7,7 +7,6 @@ using UnityEngine.UIElements;
 
 public class EnemyModel : MonoBehaviour
 {
-    public float moveSpeed = 3f;
     public float health = 100f;
 
     public GameObject healthKit;
@@ -18,7 +17,6 @@ public class EnemyModel : MonoBehaviour
     void Awake()
     {
         ev = GetComponent<EnemyView>();
-
     }
 
     void Start()
@@ -68,28 +66,16 @@ public class EnemyModel : MonoBehaviour
 
     private void DisableEnemy()
     {
-        // Evitar que siga interactuando con el mundo
-        //Collider col = GetComponent<Collider>();
-        //if (col != null) col.enabled = false;
 
         EnemyController ec = GetComponent<EnemyController>();
         if (ec != null) ec.enabled = false;
-        ec.moveSpeed = 3f;
 
         UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         if (agent != null) agent.ResetPath();
-        //if (agent != null) agent.enabled = false;
-
-
-        // También podés apagar otros componentes si hiciera falta
-        // Rigidbody rb = GetComponent<Rigidbody>();
-        // if (rb != null) rb.isKinematic = true;
     }
 
     private void EnableEnemy()
     {
-        //Collider col = GetComponent<Collider>();
-        //if (col != null) col.enabled = true;
 
         EnemyController ec = GetComponent<EnemyController>();
         if (ec != null) ec.enabled = true;
