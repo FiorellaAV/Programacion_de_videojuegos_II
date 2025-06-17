@@ -26,11 +26,6 @@ public class EnemyModel : MonoBehaviour
         if (pool != null) UnityEngine.Debug.Log("Habemus Pool en EnemyModel");
     }
 
-    void Update()
-    {
-
-    }
-
     public void TakeDamage()
     {
         health -= 100; //de momento dejar así, cambiar por otro valor, quizás usar una clase Enemy con diferentes valores para que cada enemigo reciba diferente daño?
@@ -67,8 +62,8 @@ public class EnemyModel : MonoBehaviour
     private void DisableEnemy()
     {
 
-        EnemyController ec = GetComponent<EnemyController>();
-        if (ec != null) ec.enabled = false;
+        EnemyPresenter enemyPresenter = GetComponent<EnemyPresenter>();
+        if (enemyPresenter != null) enemyPresenter.enabled = false;
 
         UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         if (agent != null) agent.ResetPath();
@@ -77,8 +72,8 @@ public class EnemyModel : MonoBehaviour
     private void EnableEnemy()
     {
 
-        EnemyController ec = GetComponent<EnemyController>();
-        if (ec != null) ec.enabled = true;
+        EnemyPresenter enemyPresenter = GetComponent<EnemyPresenter>();
+        if (enemyPresenter != null) enemyPresenter.enabled = true;
 
         UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         if (agent != null) agent.enabled = true;

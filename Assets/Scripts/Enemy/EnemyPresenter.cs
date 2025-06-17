@@ -1,13 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyController : MonoBehaviour
+public class EnemyPresenter : MonoBehaviour
 {
-    private EnemyView ev;
+    private EnemyView enemyView;
     NavMeshAgent agent;
     private Transform player;      // Asignar desde el Inspector
     // public float moveSpeed = 3f;   // Velocidad de movimiento
@@ -19,7 +16,8 @@ public class EnemyController : MonoBehaviour
     //  Inicialización de referencias internas
     void Awake()
     {
-        ev = GetComponent<EnemyView>();
+        agent = GetComponent<NavMeshAgent>();
+        enemyView = GetComponent<EnemyView>();
         isWaiting = false;
     }
 
@@ -34,6 +32,10 @@ public class EnemyController : MonoBehaviour
         {
             Move();
         }
+        else
+        {
+            agent.isStopped = true;
+        }
     }
 
     public void Move()
@@ -44,7 +46,7 @@ public class EnemyController : MonoBehaviour
             {
                 UnityEngine.Debug.Log("no hay player");
             }
-            agent = GetComponent<NavMeshAgent>();
+            
 
             // Se agrego validacion de navmesh
             if (agent.isOnNavMesh)
@@ -58,11 +60,29 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void Attack()
+    {
+        enemyView.Attack();
+        StartCoroutine(WaitAfterHit());
+    }
+
     public IEnumerator WaitAfterHit()
     {
         isWaiting = true;
-        ev.WaitAttack();
-        yield return new WaitForSeconds(enemyData.AttacDelay);
+        //enemyView.WaitAttack();
+        yield return new WaitForSeconds(enemyData.AttackDelay);
         isWaiting = false;
+        agent.isStopped = false;
+        //enemyView.Walk();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerPresenter playerPresenter = collision.gameObject.GetComponent<PlayerPresenter>();
+            this.Attack();
+            playerPresenter.ReceiveDamage(enemyData.Damage);
+        }
     }
 }

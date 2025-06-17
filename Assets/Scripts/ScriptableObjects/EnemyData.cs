@@ -14,6 +14,6 @@ public class EnemyData : ScriptableObject
     public string Description { get { return _description; } }
     public int Cost { get { return _cost; } }
     public int Damage { get { return _damage; } }
-    public float AttacDelay { get { return _attackDelay; } }
+    public float AttackDelay { get { return _attackDelay; } }
     public float MoveSpeed { get { return _moveSpeed; } }
 }

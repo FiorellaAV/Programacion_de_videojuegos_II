@@ -119,11 +119,11 @@ public class EnemySpawner : MonoBehaviour
                 }
             }
 
-            // Asignar el jugador al EnemyController
-            EnemyController controller = newEnemy.GetComponent<EnemyController>();
-            if (controller != null)
+            // Asignar el jugador al EnemyPresenter
+            EnemyPresenter enemyPresenter = newEnemy.GetComponent<EnemyPresenter>();
+            if (enemyPresenter != null)
             {
-                controller.Initialize(player);
+                enemyPresenter.Initialize(player);
             }
             else
             {

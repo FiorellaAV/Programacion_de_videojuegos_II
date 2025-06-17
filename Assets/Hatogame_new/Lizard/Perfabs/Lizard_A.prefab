@@ -175,7 +175,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -217,9 +217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55741e7f49e5cf441a07ee854c9d0afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  damage: 10
-  reachDistance: 2
   enemyData: {fileID: 11400000, guid: 95a40d12e64cd4147be5ba44317c488f, type: 2}
 --- !u!114 &-2589735644651847080
 MonoBehaviour:
@@ -233,7 +230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72854c563b515d3418c19a6b7dd090c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
   health: 100
   healthKit: {fileID: 7244136257834945831, guid: b7a7b89af7cc2d240a3b50e3bfc52c36,
     type: 3}

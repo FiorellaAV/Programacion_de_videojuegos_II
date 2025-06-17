@@ -91,24 +91,24 @@ public class PlayerPresenter : MonoBehaviour
 
                 if (nearby.TryGetComponent<PlayerPresenter>(out var playerPresenter))
                 {
-                    playerPresenter.ApplyDamageToPlayer(explosionDamage);
+                    playerPresenter.ReceiveDamage(explosionDamage);
                 }
             }
         }
     }
 
-    public void OnCollisionEnter(Collision collision)
+    /*public void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Enemy")
         {
-            EnemyController ec = collision.gameObject.GetComponent<EnemyController>();
+            EnemyPresenter enemyPresenter = collision.gameObject.GetComponent<EnemyPresenter>();
             // TODO. Llamar al Takedamaage pero con el deaño segun enemigo
-            model.TakeDamage(ec.enemyData.Damage);
-            ec.WaitAfterHit();
+            model.TakeDamage(enemyPresenter.enemyData.Damage);
+            StartCoroutine(enemyPresenter.WaitAfterHit());
         }
-    }
+    }*/
 
-    public void ApplyDamageToPlayer(float damage)
+    public void ReceiveDamage(float damage)
     {
         model.TakeDamage(damage);
 

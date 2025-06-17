@@ -16,5 +16,5 @@ MonoBehaviour:
   _description: Common Enemy
   _cost: 1
   _damage: 10
-  _attackDelay: 2
+  _attackDelay: 1.3
   _moveSpeed: 3
