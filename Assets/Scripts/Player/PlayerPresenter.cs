@@ -102,7 +102,7 @@ public class PlayerPresenter : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             EnemyPresenter enemyPresenter = collision.gameObject.GetComponent<EnemyPresenter>();
-            // TODO. Llamar al Takedamaage pero con el deaño segun enemigo
+            // TODO. Llamar al Takedamaage pero con el deaï¿½o segun enemigo
             model.TakeDamage(enemyPresenter.enemyData.Damage);
             StartCoroutine(enemyPresenter.WaitAfterHit());
         }
