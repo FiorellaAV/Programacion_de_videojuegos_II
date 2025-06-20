@@ -23,7 +23,7 @@ public class EnemyModel : MonoBehaviour
     {
         spawner = EnemySpawner.Instance;
         pool = spawner.GetComponent<ObjectPool>();
-        if (pool != null) UnityEngine.Debug.Log("Habemus Pool en EnemyModel");
+        // if (pool != null) UnityEngine.Debug.Log("Habemus Pool en EnemyModel");
     }
 
     public void TakeDamage()

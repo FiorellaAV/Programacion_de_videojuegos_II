@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public GameObject victoryPanel;
     public GameObject gameOverPanel;
     public GameObject playerPrefab;
+    public GameObject[] statues;
+    public int activeStatueOneAt = 30;
+    public int activeStatueTwoAt = 40;
 
     private bool isGameOver = false;
     public bool gameEnded = false;
@@ -94,6 +97,14 @@ public class GameManager : MonoBehaviour
         if (enemiesKilled >= victoryCount)
         {
             Victory();
+        }
+        if (enemiesKilled >= activeStatueOneAt && !statues[0].activeSelf)
+        {
+            statues[0].SetActive(true);
+        }
+        if (enemiesKilled >= activeStatueTwoAt && !statues[1].activeSelf)
+        {
+            statues[1].SetActive(true);
         }
     }
 

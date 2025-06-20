@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 328939557}
   m_Layer: 0
   m_Name: WallPilarNorthTOP
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5779,6 +5779,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 659803353}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &493160367 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3500561273657795343, guid: 0f08e328661080345812fd9aa617a36e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6025183446465880020}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &505931307 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4706116037937865665, guid: 52c7d057cba585641bb68312c10d7791,
@@ -7610,6 +7616,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1105792530 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3500561273657795343, guid: 0f08e328661080345812fd9aa617a36e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1583558837}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1132187016
 GameObject:
   m_ObjectHideFlags: 0
@@ -18414,6 +18426,84 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563208622}
   m_CullTransparentMesh: 1
+--- !u!1001 &1583558837
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3500561273657795343, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_Name
+      value: Cthuluh statue low poly (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500561273657795343, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.029766735
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.99955696
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -176.588
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5912218404274244290, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: shootInterval
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0f08e328661080345812fd9aa617a36e, type: 3}
 --- !u!4 &1609969942 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bcc66fb6042b14d46bc9d27fa37aae9b,
@@ -18434,7 +18524,7 @@ GameObject:
   - component: {fileID: 1618290115}
   m_Layer: 0
   m_Name: BottomWall
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18572,7 +18662,7 @@ GameObject:
   - component: {fileID: 1652527020}
   m_Layer: 0
   m_Name: WallPilarEast
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18910,6 +19000,11 @@ MonoBehaviour:
   gameOverPanel: {fileID: 415815666}
   playerPrefab: {fileID: 5605093189521642763, guid: a3759cd2191ce5341ab514ce04bd216a,
     type: 3}
+  statues:
+  - {fileID: 493160367}
+  - {fileID: 1105792530}
+  activeStatueOneAt: 30
+  activeStatueTwoAt: 40
   gameEnded: 0
   enemiesKilled: 0
   victoryCount: 50
@@ -18945,7 +19040,7 @@ GameObject:
   - component: {fileID: 1795078854}
   m_Layer: 0
   m_Name: TopWall
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19051,7 +19146,7 @@ GameObject:
   - component: {fileID: 1816115146}
   m_Layer: 0
   m_Name: WallPilarSouthEast
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19173,7 +19268,7 @@ GameObject:
   - component: {fileID: 1821253030}
   m_Layer: 0
   m_Name: WallPilarNorth
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24211,7 +24306,7 @@ GameObject:
   - component: {fileID: 1917183056}
   m_Layer: 0
   m_Name: LeftWall
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24392,7 +24487,7 @@ GameObject:
   - component: {fileID: 1948174246}
   m_Layer: 0
   m_Name: RightWall
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29705,7 +29800,7 @@ GameObject:
   - component: {fileID: 2144931688}
   m_Layer: 0
   m_Name: WallPilarSouthWest
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29812,6 +29907,84 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!1001 &6025183446465880020
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3500561273657795343, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_Name
+      value: Cthuluh statue low poly
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500561273657795343, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.054059
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.243391
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9996502
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.026449189
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 3.031
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314357470856018357, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5912218404274244290, guid: 0f08e328661080345812fd9aa617a36e,
+        type: 3}
+      propertyPath: shootInterval
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0f08e328661080345812fd9aa617a36e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -29850,3 +30023,5 @@ SceneRoots:
   - {fileID: 1267980700}
   - {fileID: 1074500648}
   - {fileID: 1295310658}
+  - {fileID: 6025183446465880020}
+  - {fileID: 1583558837}

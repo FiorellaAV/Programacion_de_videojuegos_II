@@ -119,26 +119,6 @@ public class EnemyLizardController : MonoBehaviour
         }
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        ev.Attack();
-    //        PlayerModel pm = other.GetComponent<PlayerModel>();
-    //        if (pm != null)
-    //        {
-    //            UnityEngine.Debug.Log(" Player founded");
-    //        }
-    //        else 
-    //        { 
-    //            UnityEngine.Debug.Log("not Player founded"); 
-    //        }
-
-    //        pm.TakeDamage(damage);
-    //        StartCoroutine(WaitAfterHit(2f));
-    //    }
-    //}
-
     private IEnumerator WaitAfterHit(float delay)
     {
         isWaiting = true;

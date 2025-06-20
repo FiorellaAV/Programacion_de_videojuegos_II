@@ -33,10 +33,10 @@ public class EnemySpawner : MonoBehaviour
         }
 
         poolCatfish = GetComponent<ObjectPool>();
-        if (poolCatfish != null) UnityEngine.Debug.Log("Habemus Pool de Catfish");
+        //if (poolCatfish != null) UnityEngine.Debug.Log("Habemus Pool de Catfish");
 
         poolLizard = GetComponent<ObjectPool>();
-        if (poolLizard != null) UnityEngine.Debug.Log("Habemus Pool de Lizard");
+        //if (poolLizard != null) UnityEngine.Debug.Log("Habemus Pool de Lizard");
     }
 
     IEnumerator Start()
