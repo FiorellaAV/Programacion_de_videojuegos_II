@@ -10,7 +10,7 @@ public class HealthKit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -19,9 +19,22 @@ public class HealthKit : MonoBehaviour
         transform.Rotate(0, 1 * rotationSpeed * Time.deltaTime, 0);
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerPresenter player = other.GetComponent<PlayerPresenter>();
+            if (player != null)
+            {
+                player.ApplyHealthKit(GetHealthGiven());
+                Destroy(gameObject);
+            }
+        }
+    }
+
     public float GetHealthGiven()
     {
-        
+
         return healthGiven;
     }
 }
