@@ -99,7 +99,7 @@ public class EnemyModel : MonoBehaviour
     {
         //Cambiar luego lógica del código para otros power ups.
         float chance = UnityEngine.Random.Range(1, 61);
-        if (chance <= 3)
+        if (chance <= 6)
         {
             GameObject.Instantiate(healthKit, transform.position, transform.rotation);
         }

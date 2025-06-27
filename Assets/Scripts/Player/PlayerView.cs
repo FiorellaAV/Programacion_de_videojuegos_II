@@ -8,14 +8,16 @@ public class PlayerView : MonoBehaviour
     private Animator animator;
     public LineRenderer lineRenderer;
     public Transform groundCheck;
-
     public float groundCheckRadius = 0.3f;
     public LayerMask groundLayer;
+
+    [SerializeField] private ParticleSystem particles;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
         lineRenderer = GetComponent<LineRenderer>();
+        particles = GetComponentInChildren<ParticleSystem>();
     }
 
     public void Initialize()
@@ -44,6 +46,11 @@ public class PlayerView : MonoBehaviour
             Quaternion rotation = Quaternion.LookRotation(direction);
             GetComponent<Rigidbody>().MoveRotation(rotation);
         }
+    }
+
+    public void StartParticles()
+    {
+        particles.Play();
     }
 
     public void DrawShotLine(Vector3 origin, Vector3 target, float duration = 0.05f)

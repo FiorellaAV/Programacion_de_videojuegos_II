@@ -121,6 +121,7 @@ public class PlayerPresenter : MonoBehaviour
 
     public void ApplyHealthKit(float amount)
     {
+        view.StartParticles();
         model.Heal(amount);
     }
 

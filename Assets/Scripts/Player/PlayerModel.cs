@@ -7,6 +7,8 @@ public class PlayerModel
     public float health = 100f;
     public bool isDashing = false;
 
+    private PlayerView view;
+
 
     public IEnumerator Dash(Rigidbody rb, float dashDistance, float dashDuration, Transform transform)
     {
@@ -51,6 +53,7 @@ public class PlayerModel
     }
     public float GetHealth()
     {
+        
         return health;
     }
 
