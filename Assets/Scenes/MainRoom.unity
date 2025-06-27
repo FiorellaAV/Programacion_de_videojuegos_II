@@ -6437,6 +6437,18 @@ PrefabInstance:
       propertyPath: pauseMenuPanel
       value: 
       objectReference: {fileID: 1886797007}
+    - target: {fileID: 1333968532896179430, guid: 48526a7b9eec623429cc856042f20066,
+        type: 3}
+      propertyPath: pausedSnapshot
+      value: 
+      objectReference: {fileID: 4450435222828257641, guid: 1b15ee3acf80faa4a8ab8fd7ce464537,
+        type: 2}
+    - target: {fileID: 1333968532896179430, guid: 48526a7b9eec623429cc856042f20066,
+        type: 3}
+      propertyPath: defaultSnapshot
+      value: 
+      objectReference: {fileID: 24500006, guid: 1b15ee3acf80faa4a8ab8fd7ce464537,
+        type: 2}
     - target: {fileID: 2411475515101448663, guid: 48526a7b9eec623429cc856042f20066,
         type: 3}
       propertyPath: m_Name
