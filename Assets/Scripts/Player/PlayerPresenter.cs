@@ -5,11 +5,14 @@ using UnityEngine.Windows;
 
 public class PlayerPresenter : MonoBehaviour
 {
+    // private Transform bulletSpawnPoint;
     private PlayerModel model;
     public PlayerModel GetModel() => model;
     private PlayerView view;
     private PlayerInput input;
     private Camera mainCamera;
+    private ObjectPool pool;
+    private bool laser = true;
 
     private float lastDashTime = -Mathf.Infinity;
 
@@ -19,12 +22,16 @@ public class PlayerPresenter : MonoBehaviour
     public float dashDistance = 5f;
     public float dashDuration = 0.2f;
     public float dashCooldown = 2f;
+    public float damage = 200f;
+    public float radius = 4f;
+    public float spawnOffset = 1.5f; 
 
     void Awake()
     {
         model = new PlayerModel();
         view = GetComponent<PlayerView>();
         input = GetComponent<PlayerInput>();
+        pool = GetComponent<ObjectPool>(); // if (pool != null) print("Habemus pool");
         mainCamera = Camera.main;
     }
 
@@ -40,13 +47,14 @@ public class PlayerPresenter : MonoBehaviour
         input.OnInputShooting += IsShooting;
         input.OnInputDashing += IsDashing;
         input.OnInputJumping += IsJumping;
+        input.OnInputChangeWeapon += ChangeWeapon;
     }
     private void OnDisable()
     {
         input.OnInputShooting -= IsShooting;
         input.OnInputDashing -= IsDashing;
         input.OnInputJumping -= IsJumping;
-
+        input.OnInputChangeWeapon -= ChangeWeapon;
     }
 
     void Update()
@@ -97,17 +105,6 @@ public class PlayerPresenter : MonoBehaviour
         }
     }
 
-    /*public void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Enemy")
-        {
-            EnemyPresenter enemyPresenter = collision.gameObject.GetComponent<EnemyPresenter>();
-            // TODO. Llamar al Takedamaage pero con el dea�o segun enemigo
-            model.TakeDamage(enemyPresenter.enemyData.Damage);
-            StartCoroutine(enemyPresenter.WaitAfterHit());
-        }
-    }*/
-
     public void ReceiveDamage(float damage)
     {
         model.TakeDamage(damage);
@@ -125,6 +122,64 @@ public class PlayerPresenter : MonoBehaviour
     }
 
     public void IsShooting()
+    {
+        if (laser)
+        {
+            ShootLine();
+        }
+        else
+        {
+            ShootBullet();
+        }
+    }
+
+    public void ChangeWeapon()
+    {
+        print("Change Weapon");
+        laser = !laser;
+    }
+
+    private void ShootBullet()
+    {
+        // Obtener ray desde cámara al mouse
+        Ray ray = mainCamera.ScreenPointToRay(UnityEngine.Input.mousePosition);
+        RaycastHit hit;
+
+        Vector3 targetPoint;
+
+        // Si choca algo, disparamos hacia ahí; si no, hacia un punto adelante
+        if (Physics.Raycast(ray, out hit, rayDistance))
+        {
+            targetPoint = hit.point;
+        }
+        else
+        {
+            targetPoint = ray.origin + ray.direction * rayDistance;
+        }
+
+        // Calcular dirección normalizada
+        Vector3 shootDirection = (targetPoint - transform.position).normalized;
+
+        // Definir posición de spawn: un poco adelante del player en esa dirección        
+        Vector3 spawnPosition = transform.position + shootDirection * spawnOffset;
+
+        // Instanciar bala
+        if (!pool.IsEmpty())
+        {
+            GameObject bullet = pool.GetObject();
+            Bullet bulletBehavior = bullet.GetComponent<Bullet>();
+            bulletBehavior.OnRecycle += OnBulletRecyclechanged;
+            bullet.transform.position = spawnPosition;
+            bulletBehavior.direction = shootDirection;
+        }
+    }
+
+    private void OnBulletRecyclechanged(GameObject bullet)
+    {
+        pool.ReturnObject(bullet);
+    }
+
+    private void ShootLine()
     {
         Vector3 origin = transform.position + Vector3.up * 0.5f;
         Vector3 direction = transform.forward;
@@ -145,10 +200,8 @@ public class PlayerPresenter : MonoBehaviour
             if (hit.collider.CompareTag("Barrel"))
             {
                 Vector3 explosionPos = hit.collider.transform.position;
-                Destroy(hit.collider.gameObject);
-
-                float radius = 4f;
-                float damage = 200f;
+                Destroy(hit.collider.gameObject);               
+               
                 Explode(explosionPos, radius, damage);
             }
         }

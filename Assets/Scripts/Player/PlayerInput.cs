@@ -14,6 +14,7 @@ public class PlayerInput : MonoBehaviour
     public event Action OnInputShooting;
     public event Action OnInputDashing;
     public event Action OnInputJumping;
+    public event Action OnInputChangeWeapon;
 
     void Update()
     {
@@ -46,6 +47,11 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             OnInputJumping?.Invoke();
+        }
+
+        if (Input.GetKey(KeyCode.C))
+        {
+            OnInputChangeWeapon?.Invoke();
         }
 
         wasInputActive = isInputActive;

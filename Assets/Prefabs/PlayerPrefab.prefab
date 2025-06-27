@@ -623,6 +623,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: -6992111696488175224}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c207202fdaf327549a88f878a897e0ab,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1353130460606174576}
     - targetCorrespondingSourceObject: {fileID: -1104766403861119595, guid: c207202fdaf327549a88f878a897e0ab,
         type: 3}
       insertIndex: -1
@@ -932,6 +936,8 @@ MonoBehaviour:
   dashDistance: 5
   dashDuration: 0.2
   dashCooldown: 2
+  damage: 200
+  radius: 4
 --- !u!114 &4805764634186827656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -962,6 +968,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4873dad2e8640dd4c8a14a9ae5e89bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1353130460606174576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5605093189521642763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0999b5e4d18f16446aafeaf6e15f4802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 3369766808353879773, guid: b9b42dc565c5b3547adc7745c1f75c72, type: 3}
+  initialSize: 10
+  prefab2: {fileID: 3369766808353879773, guid: b9b42dc565c5b3547adc7745c1f75c72, type: 3}
+  initialSize2: 10
 --- !u!1001 &7347001080076848624
 PrefabInstance:
   m_ObjectHideFlags: 0

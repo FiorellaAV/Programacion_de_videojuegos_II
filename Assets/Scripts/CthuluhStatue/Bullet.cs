@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        transform.position += direction * speed * Time.deltaTime;
     }    
 
     private void OnCollisionEnter(Collision collision)
@@ -34,6 +34,14 @@ public class Bullet : MonoBehaviour
                 playerPresenter.ReceiveDamage(enemyData.Damage);
             }
 
+            OnRecycle?.Invoke(this.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            print("Le di al Enemy");
+            EnemyModel enemy = collision.gameObject.GetComponent<EnemyModel>();
+            enemy.TakeDamage();
             OnRecycle?.Invoke(this.gameObject);
         }
     }
