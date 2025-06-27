@@ -31,9 +31,9 @@ public class EnemyModel : MonoBehaviour
 
     public void TakeDamage(int value)
     {
-        health -= value; //de momento dejar así, cambiar por otro valor, quizás usar una clase Enemy con diferentes valores para que cada enemigo reciba diferente daño?
+        health -= value;
         checkHealth();
-        UnityEngine.Debug.Log(health);
+        //UnityEngine.Debug.Log(health);
     }
 
     private void checkHealth()
@@ -41,6 +41,8 @@ public class EnemyModel : MonoBehaviour
         if (health <= 0)
         {
             DisableEnemy();
+
+            GameManager.Instance?.EnemyKilled();
 
             ev.Die(); // Lanza animación de muerte
 

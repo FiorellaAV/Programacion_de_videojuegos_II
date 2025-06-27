@@ -21912,7 +21912,7 @@ MonoBehaviour:
   activeStatueTwoAt: 40
   gameEnded: 0
   enemiesKilled: 0
-  victoryCount: 50
+  victoryCount: 100
   killCounterText: {fileID: 919530231}
   playerPresenter: {fileID: 0}
   healthBar: {fileID: 1725211628}

@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     // public GameObject enemyPrefab;
     public Transform[] spawnPoints;
     public float spawnInterval = 5f;
-    public int catfishPerWave = 4;
+    public int catfishPerWave = 5;
     public int lizardsPerWave = 1;
     private bool isSpawning = true;
     private Transform player;

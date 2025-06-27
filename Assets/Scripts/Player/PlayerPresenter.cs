@@ -13,16 +13,18 @@ public class PlayerPresenter : MonoBehaviour
     private Camera mainCamera;
     private ObjectPool pool;
     private bool laser = true;
-
+    private int damage = 20;
+    private bool canShoot = true;
+    private float shootCooldown = 2f;
     private float lastDashTime = -Mathf.Infinity;
 
     public float moveSpeed = 5f;
-    public float jumpForce = 50f;
+    public float jumpForce;
     public float rayDistance = 100f;
     public float dashDistance = 5f;
     public float dashDuration = 0.2f;
     public float dashCooldown = 2f;
-    public int damage = 20;
+    
     public float radius = 4f;
     public float spawnOffset = 1.5f; 
 
@@ -63,6 +65,7 @@ public class PlayerPresenter : MonoBehaviour
             return;
 
         view.VerifyJump();
+        Debug.Log(laser);
     }
 
     void FixedUpdate()
@@ -83,7 +86,7 @@ public class PlayerPresenter : MonoBehaviour
         // Actualizar animaciones
         view.AimToMouse(input.Axis.x, input.Axis.z);
     }
-    private void Explode(Vector3 explosionPos, float explosionRadius, float explosionDamage)
+    private void Explode(Vector3 explosionPos, float explosionRadius, int explosionDamage)
     {
         view.PlayExplosionEffect(explosionPos);
         Collider[] colliders = Physics.OverlapSphere(explosionPos, explosionRadius);
@@ -91,7 +94,7 @@ public class PlayerPresenter : MonoBehaviour
         {
             if (nearby.CompareTag("Enemy"))
             {
-                if (nearby.TryGetComponent<EnemyModel>(out var enemy)) enemy.TakeDamage(damage);
+                if (nearby.TryGetComponent<EnemyModel>(out var enemy)) enemy.TakeDamage(explosionDamage);
 
             }
             if (nearby.CompareTag("Player"))
@@ -141,37 +144,50 @@ public class PlayerPresenter : MonoBehaviour
 
     private void ShootBullet()
     {
-        // Obtener ray desde cámara al mouse
-        Ray ray = mainCamera.ScreenPointToRay(UnityEngine.Input.mousePosition);
-        RaycastHit hit;
 
-        Vector3 targetPoint;
-
-        // Si choca algo, disparamos hacia ahí; si no, hacia un punto adelante
-        if (Physics.Raycast(ray, out hit, rayDistance))
+        if (canShoot)
         {
-            targetPoint = hit.point;
-        }
-        else
-        {
-            targetPoint = ray.origin + ray.direction * rayDistance;
-        }
+            canShoot = false;
+            // Obtener ray desde cámara al mouse
+            Ray ray = mainCamera.ScreenPointToRay(UnityEngine.Input.mousePosition);
+            RaycastHit hit;
 
-        // Calcular dirección normalizada
-        Vector3 shootDirection = (targetPoint - transform.position).normalized;
+            Vector3 targetPoint;
 
-        // Definir posición de spawn: un poco adelante del player en esa dirección        
-        Vector3 spawnPosition = transform.position + shootDirection * spawnOffset;
+            // Si choca algo, disparamos hacia ahí; si no, hacia un punto adelante
+            if (Physics.Raycast(ray, out hit, rayDistance))
+            {
+                targetPoint = hit.point;
+            }
+            else
+            {
+                targetPoint = ray.origin + ray.direction * rayDistance;
+            }
 
-        // Instanciar bala
-        if (!pool.IsEmpty())
-        {
-            GameObject bullet = pool.GetObject();
-            Bullet bulletBehavior = bullet.GetComponent<Bullet>();
-            bulletBehavior.OnRecycle += OnBulletRecyclechanged;
-            bullet.transform.position = spawnPosition;
-            bulletBehavior.direction = shootDirection;
+            // Calcular dirección normalizada
+            Vector3 shootDirection = (targetPoint - transform.position).normalized;
+
+            // Definir posición de spawn: un poco adelante del player en esa dirección        
+            Vector3 spawnPosition = transform.position + shootDirection * spawnOffset;
+
+            // Instanciar bala
+            if (!pool.IsEmpty())
+            {
+                GameObject bullet = pool.GetObject();
+                Bullet bulletBehavior = bullet.GetComponent<Bullet>();
+                bulletBehavior.OnRecycle += OnBulletRecyclechanged;
+                bullet.transform.position = spawnPosition;
+                bulletBehavior.direction = shootDirection;
+            }
+
+            StartCoroutine(RestartCooldown(shootCooldown));
         }
+    }
+
+    IEnumerator RestartCooldown (float cooldown)
+    {
+        yield return new WaitForSeconds(cooldown);
+        canShoot = true;
     }
 
     private void OnBulletRecyclechanged(GameObject bullet)
@@ -191,7 +207,7 @@ public class PlayerPresenter : MonoBehaviour
             if (hit.collider.CompareTag("Enemy"))
             {
                 view.ShowBloodEffect(hit.collider.transform.position);
-                GameManager.Instance?.EnemyKilled();
+                
 
                 if (hit.collider.TryGetComponent<EnemyModel>(out var enemy)) enemy.TakeDamage(damage);
             }
@@ -201,7 +217,7 @@ public class PlayerPresenter : MonoBehaviour
                 Vector3 explosionPos = hit.collider.transform.position;
                 Destroy(hit.collider.gameObject);               
                
-                Explode(explosionPos, radius, 200);
+                Explode(explosionPos, radius, 800);
             }
         }
     }

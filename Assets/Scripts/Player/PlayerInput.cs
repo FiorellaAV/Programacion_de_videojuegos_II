@@ -44,12 +44,12 @@ public class PlayerInput : MonoBehaviour
             OnInputDashing?.Invoke();
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             OnInputJumping?.Invoke();
         }
 
-        if (Input.GetKey(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             OnInputChangeWeapon?.Invoke();
         }

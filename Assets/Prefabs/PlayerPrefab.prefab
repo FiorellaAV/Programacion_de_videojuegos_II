@@ -903,7 +903,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5605093189521642763}
   serializedVersion: 4
-  m_Mass: 270
+  m_Mass: 20
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 1, z: 0}
@@ -935,12 +935,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 50
+  jumpForce: 150
   rayDistance: 100
   dashDistance: 5
   dashDuration: 0.2
   dashCooldown: 2
-  damage: 200
   radius: 4
   spawnOffset: 1.5
 --- !u!114 &4805764634186827656
