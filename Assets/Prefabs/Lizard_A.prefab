@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72854c563b515d3418c19a6b7dd090c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 300
   healthKit: {fileID: 7244136257834945831, guid: b7a7b89af7cc2d240a3b50e3bfc52c36,
     type: 3}
 --- !u!114 &8867254059901820736

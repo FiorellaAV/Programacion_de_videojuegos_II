@@ -13,6 +13,8 @@ public class Bullet : MonoBehaviour
     public event Action<GameObject> OnRecycle;
     public Vector3 direction { get; set; }
 
+    private int damage = 100;
+
     void Update()
     {
         transform.position += direction * speed * Time.deltaTime;
@@ -41,7 +43,7 @@ public class Bullet : MonoBehaviour
         {
             print("Le di al Enemy");
             EnemyModel enemy = collision.gameObject.GetComponent<EnemyModel>();
-            enemy.TakeDamage();
+            enemy.TakeDamage(damage);
             OnRecycle?.Invoke(this.gameObject);
         }
     }

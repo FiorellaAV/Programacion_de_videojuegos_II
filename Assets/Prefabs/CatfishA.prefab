@@ -212,8 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72854c563b515d3418c19a6b7dd090c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  health: 100
+  health: 150
   healthKit: {fileID: 7244136257834945831, guid: b7a7b89af7cc2d240a3b50e3bfc52c36,
     type: 3}
 --- !u!114 &-7908584692055039785
@@ -240,7 +239,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55741e7f49e5cf441a07ee854c9d0afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  damage: 10
-  reachDistance: 2
   enemyData: {fileID: 11400000, guid: ba2523b8fe26430429ec08f88b2ae5a6, type: 2}
