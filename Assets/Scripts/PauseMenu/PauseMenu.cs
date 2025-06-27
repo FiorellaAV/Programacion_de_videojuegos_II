@@ -78,6 +78,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OpenMenu()
     {
+        if(Time.timeScale == 0f) return; // No abrir si ya está pausado
         Time.timeScale = 0f; // Pausar el juego
 
         Lowpass(); // Cambiar al snapshot de pausa
@@ -122,6 +123,7 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        CloseMenu();
         Time.timeScale = 1f; // Asegurarse de reanudar el juego
         SceneManager.LoadScene("Menu");
     }

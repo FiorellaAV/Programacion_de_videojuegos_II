@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using static Unity.VisualScripting.Member;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,19 +30,18 @@ public class GameManager : MonoBehaviour
     float maxHealth;
     float lerpSpeed;
 
+    public AudioSource combatMusic;
+
     void Awake()
     {
         if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
-
-
     }
 
     void Start()
     {
-
         UpdateCounterText();
 
         if (victoryPanel != null)

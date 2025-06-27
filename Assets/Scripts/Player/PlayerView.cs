@@ -12,6 +12,9 @@ public class PlayerView : MonoBehaviour
     public float groundCheckRadius = 0.3f;
     public LayerMask groundLayer;
 
+    public AudioSource shootSound;
+    public AudioSource rockShootSound;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -25,6 +28,16 @@ public class PlayerView : MonoBehaviour
     void Start()
     {
         lineRenderer.enabled = false;
+    }
+
+    public void PlayShootSfx()
+    {
+        shootSound.Play();
+    }
+
+    public void PlayRockShootSfx()
+    {
+        rockShootSound.Play();
     }
 
     public bool IsGrounded()

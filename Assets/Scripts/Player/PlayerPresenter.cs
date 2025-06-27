@@ -126,6 +126,7 @@ public class PlayerPresenter : MonoBehaviour
 
     public void IsShooting()
     {
+        if(Time.timeScale == 0f) { return; } //Solucionar bug que dispara en pausa
         if (laser)
         {
             ShootLine();
@@ -147,6 +148,7 @@ public class PlayerPresenter : MonoBehaviour
 
         if (canShoot)
         {
+            view.PlayRockShootSfx();
             canShoot = false;
             // Obtener ray desde cámara al mouse
             Ray ray = mainCamera.ScreenPointToRay(UnityEngine.Input.mousePosition);
@@ -197,6 +199,7 @@ public class PlayerPresenter : MonoBehaviour
 
     private void ShootLine()
     {
+        view.PlayShootSfx();
         Vector3 origin = transform.position + Vector3.up * 0.5f;
         Vector3 direction = transform.forward;
 
