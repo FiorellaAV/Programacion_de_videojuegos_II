@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class EnemyModel : MonoBehaviour
 {
-    public float health = 100f;
+    public float health;
 
     public GameObject healthKit;
     private EnemySpawner spawner;
@@ -29,10 +29,11 @@ public class EnemyModel : MonoBehaviour
         // if (pool != null) UnityEngine.Debug.Log("Habemus Pool en EnemyModel");
     }
 
-    public void TakeDamage()
+    public void TakeDamage(int value)
     {
-        health -= 100; //de momento dejar así, cambiar por otro valor, quizás usar una clase Enemy con diferentes valores para que cada enemigo reciba diferente daño?
+        health -= value; //de momento dejar así, cambiar por otro valor, quizás usar una clase Enemy con diferentes valores para que cada enemigo reciba diferente daño?
         checkHealth();
+        UnityEngine.Debug.Log(health);
     }
 
     private void checkHealth()

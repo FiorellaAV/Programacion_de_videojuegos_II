@@ -22,7 +22,7 @@ public class PlayerPresenter : MonoBehaviour
     public float dashDistance = 5f;
     public float dashDuration = 0.2f;
     public float dashCooldown = 2f;
-    public float damage = 200f;
+    public int damage = 20;
     public float radius = 4f;
     public float spawnOffset = 1.5f; 
 
@@ -91,8 +91,8 @@ public class PlayerPresenter : MonoBehaviour
         {
             if (nearby.CompareTag("Enemy"))
             {
-                if (nearby.TryGetComponent<EnemyModel>(out var enemy)) enemy.TakeDamage();
-                if (nearby.TryGetComponent<EnemyLizardModel>(out var lizard)) lizard.TakeDamage();
+                if (nearby.TryGetComponent<EnemyModel>(out var enemy)) enemy.TakeDamage(damage);
+
             }
             if (nearby.CompareTag("Player"))
             {
@@ -193,8 +193,7 @@ public class PlayerPresenter : MonoBehaviour
                 view.ShowBloodEffect(hit.collider.transform.position);
                 GameManager.Instance?.EnemyKilled();
 
-                if (hit.collider.TryGetComponent<EnemyModel>(out var enemy)) enemy.TakeDamage();
-                if (hit.collider.TryGetComponent<EnemyLizardModel>(out var lizard)) lizard.TakeDamage();
+                if (hit.collider.TryGetComponent<EnemyModel>(out var enemy)) enemy.TakeDamage(damage);
             }
 
             if (hit.collider.CompareTag("Barrel"))
@@ -202,7 +201,7 @@ public class PlayerPresenter : MonoBehaviour
                 Vector3 explosionPos = hit.collider.transform.position;
                 Destroy(hit.collider.gameObject);               
                
-                Explode(explosionPos, radius, damage);
+                Explode(explosionPos, radius, 200);
             }
         }
     }
