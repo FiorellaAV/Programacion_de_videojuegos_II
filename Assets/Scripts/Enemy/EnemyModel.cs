@@ -13,14 +13,17 @@ public class EnemyModel : MonoBehaviour
     private EnemySpawner spawner;
     private ObjectPool pool;
     private EnemyView ev;
+    private CapsuleCollider collider;
 
     void Awake()
     {
+        collider = GetComponent<CapsuleCollider>();
         ev = GetComponent<EnemyView>();
     }
 
     void Start()
     {
+        
         spawner = EnemySpawner.Instance;
         pool = spawner.GetComponent<ObjectPool>();
         // if (pool != null) UnityEngine.Debug.Log("Habemus Pool en EnemyModel");
@@ -36,11 +39,14 @@ public class EnemyModel : MonoBehaviour
     {
         if (health <= 0)
         {
+            DisableEnemy();
+
             ev.Die(); // Lanza animación de muerte
+
             generatePowerUp();
 
             // Desactivar lógica y colisiones para que no afecte el juego
-            DisableEnemy();
+            
 
             // Esperar a que termine la animación antes de devolver al pool
             StartCoroutine(DieAfterDelay(2f));
@@ -61,6 +67,7 @@ public class EnemyModel : MonoBehaviour
 
     private void DisableEnemy()
     {
+        collider.enabled =false;
 
         EnemyPresenter enemyPresenter = GetComponent<EnemyPresenter>();
         if (enemyPresenter != null) enemyPresenter.enabled = false;
@@ -71,6 +78,7 @@ public class EnemyModel : MonoBehaviour
 
     private void EnableEnemy()
     {
+        collider.enabled = true;
 
         EnemyPresenter enemyPresenter = GetComponent<EnemyPresenter>();
         if (enemyPresenter != null) enemyPresenter.enabled = true;
