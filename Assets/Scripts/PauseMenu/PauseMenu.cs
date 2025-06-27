@@ -13,6 +13,11 @@ public class PauseMenu : MonoBehaviour
     public Slider musicSlider;
     public Slider sfxSlider;
 
+    [Header("Snapshots de Audio")]
+    public AudioMixerSnapshot defaultSnapshot;
+    public AudioMixerSnapshot pausedSnapshot;
+
+
     [Header("Elementos del Menú")]
     public Button menuButton;
     public Button resumeButton;
@@ -74,6 +79,9 @@ public class PauseMenu : MonoBehaviour
     public void OpenMenu()
     {
         Time.timeScale = 0f; // Pausar el juego
+
+        Lowpass(); // Cambiar al snapshot de pausa
+
         if (IsInGame())
         {
             menuButton.gameObject.SetActive(true);
@@ -85,18 +93,31 @@ public class PauseMenu : MonoBehaviour
             exitButton.gameObject.SetActive(true);
         }
         pauseMenuPanel.SetActive(true);
-        
-    }
-
-    private bool IsInGame()
-    {
-        return SceneManager.GetActiveScene().name != "Menu";
     }
 
     public void CloseMenu()
     {
         pauseMenuPanel.SetActive(false);
         Time.timeScale = 1f; // Reanudar el juego
+        Lowpass(); // Volver al snapshot por defecto
+    }
+
+    private void Lowpass()
+    {
+        if(Time.timeScale == 0)
+        {
+            pausedSnapshot.TransitionTo(0);
+        }
+        else
+        {
+            defaultSnapshot.TransitionTo(0);
+        }
+    }
+
+
+    private bool IsInGame()
+    {
+        return SceneManager.GetActiveScene().name != "Menu";
     }
 
     public void LoadMainMenu()
