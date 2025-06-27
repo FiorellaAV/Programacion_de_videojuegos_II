@@ -13,7 +13,7 @@ public class MenuManager : MonoBehaviour
     public LightController r_eye;
 
     public GameObject brickUp, brickMid, brickDown;
-    public GameObject buttonPlay, buttonCredits, buttonExit;
+    public GameObject buttonPlay, buttonCredits, buttonOptions;
 
 
     [SerializeField] bool clicked = false;
@@ -76,14 +76,9 @@ public class MenuManager : MonoBehaviour
 
     IEnumerator Play()
     {
-        buttonExit.GetComponent<Button>().interactable = false;
+        buttonOptions.GetComponent<Button>().interactable = false;
         buttonCredits.GetComponent<Button>().interactable = false;
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene("MainRoom");
-    }
-
-    public void OnApplicationQuit()
-    {
-        Application.Quit();
     }
 }
