@@ -115,8 +115,14 @@ public class PlayerPresenter : MonoBehaviour
         if (model.IsDead())
         {
             view.Die();
-            GameManager.Instance.GameOver();
+            StartCoroutine(DelayedGameOver(2f));
         }
+    }
+
+    private IEnumerator DelayedGameOver(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        GameManager.Instance.GameOver();
     }
 
     public void ApplyHealthKit(float amount)
